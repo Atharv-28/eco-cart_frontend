@@ -1,0 +1,9 @@
+.footer-link {
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    color: #198754 !important;
+    text-decoration: underline;
+  }
+  

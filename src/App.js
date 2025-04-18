@@ -4,6 +4,7 @@ import GetRating from './pages/GetRating';
 import LensSearch from './pages/LensSearch';
 import Header from './components/Header'; 
 import AboutUs from './pages/AboutUs';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         {/* Fallback route for unmatched paths */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
