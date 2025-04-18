@@ -1,12 +1,13 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css' ;
+import { NavLink } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.css';
 
 const Header = () => {
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
       <div className="container">
-        <a className="navbar-brand fw-bold text-success" href="#">Eco-Cart</a>
+        <NavLink className="navbar-brand fw-bold text-success" to="/">Eco-Cart</NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,16 +23,24 @@ const Header = () => {
         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" href="/">Home</a>
+              <NavLink to="/" className="nav-link" end>
+                Home
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="Get-Rating">Get Rating</a>
+              <NavLink to="/Get-Rating" className="nav-link">
+                Get Rating
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="Lens-Search">Lens Search</a>
+              <NavLink to="/Lens-Search" className="nav-link">
+                Lens Search
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="About-Us">About us</a>
+              <NavLink to="/About-Us" className="nav-link">
+                About Us
+              </NavLink>
             </li>
           </ul>
         </div>
