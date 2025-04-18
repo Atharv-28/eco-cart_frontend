@@ -181,6 +181,143 @@ export const products =[
       "rating": 4.7,
       "rating_desc": "Each pencil contains seeds that can be planted after use, promoting recycling and greenery.",
       "material": "Recycled paper, seed capsules"
-    }
+    },
+    //update 2
+    {
+        id: "steel_bottle",
+        name: "Stainless Steel Insulated Bottle",
+        link: "https://amzn.in/d/dJekbzr",
+        img: "https://m.media-amazon.com/images/I/71PNgPj9ANL._SX522_.jpg",
+        rating: 4.2,
+        rating_desc: "Reusable stainless steel with insulated design, reduces single-use plastic bottles.",
+        material: "Stainless steel"
+      },
+      {
+        id: "bamboo_toothbrush_sensitive",
+        name: "Regular Bamboo Toothbrush (Sensitive Teeth)",
+        link: "https://www.ecokaari.org/products/regular-bamboo-toothbrush-for-sensitive-teeth?srsltid=AfmBOoqPB1Eam8CvwX-G6HuOyHkFZygmxrb6hts3qrPIMWz8jbXqMHqwlC8",
+        img: "https://www.ecokaari.org/cdn/shop/products/7thNatural21-01-202313477_1400x1400.jpg?v=1680180130",
+        rating: 4.8,
+        rating_desc: "Eco-friendly bamboo handle, biodegradable and sustainably made by local artisans.",
+        material: "Bamboo"
+      },
+      {
+        id: "bamboo_straw",
+        name: "Eco-friendly Bamboo Straw",
+        link: "https://www.aajjo.com/product/eco-friendly-bamboo-straw-in-hyderabad-wudbox",
+        img: "https://d91ztqmtx7u1k.cloudfront.net/ClientContent/Images/ExtraLarge/eco-friendly-bamboo-straw-20240614172126143.jpeg",
+        rating: 4.7,
+        rating_desc: "Reusable bamboo straw with zero plastic, biodegradable and chemical-free.",
+        material: "Bamboo"
+      },
+      {
+        id: "steel_straw_set",
+        name: "Eco-friendly Steel Straw Set",
+        link: "https://amzn.in/d/3MEFu6r",
+        img: "https://m.media-amazon.com/images/I/718JNiMsHsL._SX679_.jpg",
+        rating: 4.5,
+        rating_desc: "Durable stainless steel reusable straws, helps reduce plastic straw waste.",
+        material: "Stainless steel"
+      },
+      {
+        id: "cotton_mesh_bags",
+        name: "Reusable Cotton Mesh Bags (Set of 3)",
+        link: "https://amzn.in/d/7PUaktd",
+        img: "https://m.media-amazon.com/images/I/51YibxH2XyL._SX679_.jpg",
+        rating: 4.6,
+        rating_desc: "100% organic cotton bags, great for grocery shopping, washable and biodegradable.",
+        material: "Organic cotton"
+      },
+      {
+        id: "coir_scrubber_pads",
+        name: "Natural Coir Scrubber Pads",
+        link: "https://amzn.in/d/cJULFtf",
+        img: "https://m.media-amazon.com/images/I/71Ai3ca1I9L._SX679_.jpg",
+        rating: 4.3,
+        rating_desc: "Made from coconut coir, compostable alternative to synthetic scrubbers.",
+        material: "Coconut coir"
+      },
+      {
+        id: "bamboo_cutlery",
+        name: "Reusable Bamboo Cutlery Set",
+        link: "https://amzn.in/d/eExn3E4",
+        img: "https://m.media-amazon.com/images/I/61oA8eoL8vL._SX679_.jpg",
+        rating: 4.6,
+        rating_desc: "Bamboo cutlery in a jute pouch, sustainable alternative to single-use plastic.",
+        material: "Bamboo, jute"
+      },
+      {
+        id: "biodegradable_bags",
+        name: "Biodegradable Garbage Bags",
+        link: "https://amzn.in/d/dWSO4Md",
+        img: "https://m.media-amazon.com/images/I/61uxIHW9QVL._SX679_.jpg",
+        rating: 4.1,
+        rating_desc: "Plant-based garbage bags that decompose naturally, reducing landfill waste.",
+        material: "Cornstarch-based bioplastic"
+      },
+      {
+        id: "loofah_sponge",
+        name: "Natural Loofah Bath Sponge",
+        link: "https://amzn.in/d/iNIDewp",
+        img: "https://m.media-amazon.com/images/I/51OBGtP4ksL._SY695_.jpg",
+        rating: 4.4,
+        rating_desc: "Made from natural loofah gourd, 100% compostable and plastic-free.",
+        material: "Loofah plant fiber"
+      },
+      {
+        id: "reusable_pads",
+        name: "Organic Cotton Reusable Pads",
+        link: "https://amzn.in/d/eSu7n4x",
+        img: "https://m.media-amazon.com/images/I/71iw4Pocl4L._SX679_.jpg",
+        rating: 4.7,
+        rating_desc: "Made from organic cotton, reusable and breathable alternative to disposables.",
+        material: "Organic cotton"
+      },
+      {
+        id: "coconut_bowl",
+        name: "Coconut Bowl with Spoon Set",
+        link: "https://amzn.in/d/6q249tE",
+        img: "https://m.media-amazon.com/images/I/81EWzUyMR+L._SX679_.jpg",
+        rating: 4.5,
+        rating_desc: "Upcycled coconut shells crafted into bowls, supports low-waste lifestyle.",
+        material: "Coconut shell, wood"
+      },
+      {
+        id: "plantable_pens_bamboo",
+        name: "Bamboo Plantable Seed Pen (Set of 10)",
+        link: "https://amzn.in/d/0u2DWeg",
+        img: "https://m.media-amazon.com/images/I/61QPhbF8M3L._SX522_.jpg",
+        rating: 4.6,
+        rating_desc: "Biodegradable bamboo pens with seeds in the caps that can be planted after use.",
+        material: "Bamboo, recycled paper, seed capsule"
+      },
+      {
+        id: "areca_plates",
+        name: "Areca Palm Leaf Plates (Pack of 25)",
+        link: "https://amzn.in/d/fTd9gSU",
+        img: "https://m.media-amazon.com/images/I/81LOCzFY+WL._SX522_.jpg",
+        rating: 4.7,
+        rating_desc: "Compostable and chemical-free disposable plates made from fallen areca palm leaves.",
+        material: "Areca palm leaf"
+      },
+      {
+        id: "organic_floor_cleaner",
+        name: "Happi Planet Organic & Herbal Floor Cleaner",
+        link: "https://www.amazon.in/Happi-Planet-Eco-Friendly-Disinfectant-Biodegradable/dp/B0B4432G7F",
+        img: "https://m.media-amazon.com/images/I/61oA8eoL8vL._SX679_.jpg",
+        rating: 4.5,
+        rating_desc: "Plant-based, non-toxic floor cleaner powered by neem; safe for pets and babies.",
+        material: "Neem extracts, coconut-derived surfactants"
+      },
+      {
+        id: "eco_detergent_happi",
+        name: "Happi Planet Eco-Friendly Floral Liquid Detergent (3L)",
+        link: "https://www.flipkart.com/happi-planet-3l-eco-friendly-floral-liquid-detergent/p/itm89976cb8c7c93",
+        img: "https://rukminim2.flixcart.com/image/416/416/xif0q/liquid-detergent/x/1/1/3l-eco-friendly-floral-liquid-detergent-happi-planet-original-imagqzqz4z7y9z5g.jpeg",
+        rating: 4.7,
+        rating_desc: "Biodegradable detergent with plant-based surfactants; packaged in recyclable paper cartons.",
+        material: "Plant-based surfactants, organic enzymes"
+      }
+
 ];
     
