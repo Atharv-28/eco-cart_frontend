@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
-import { FiUpload, FiCamera, FiClock, FiImage, FiSearch } from 'react-icons/fi';
+import { FiUpload, FiCamera, FiClock, FiSearch } from 'react-icons/fi';
+import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import './LensSearch.css';
 import ProductCard from '../components/ProductCard'; // Assuming you have a ProductCard component
 export default function LensSearchPage() {
@@ -44,14 +45,15 @@ export default function LensSearchPage() {
     <div className="lens-container">
       <header className="lens-header">
         <div className="logo-container">
-          <FiImage className="logo-icon" />
+          <CenterFocusWeakIcon className="logo-icon" />
           <h1>EcoLens</h1>
         </div>
+
         <h2>Scan Products for Sustainability Insights</h2>
       </header>
 
       <main className="main-content">
-        <div 
+        <div
           className={`upload-area ${isDragging ? 'dragging' : ''}`}
           onDragEnter={handleDragEnter}
           onDragOver={handleDragEnter}

@@ -5,15 +5,15 @@ function AboutUs() {
   const developers = [
     {
       name: "Atharv Tambekar",
-      image: "/images/athrav.jpg", // Adjust paths as needed
+      image: "https://avatars.githubusercontent.com/u/110536276?v=4",
     },
     {
       name: "Siddharth Vhatkar",
-      image: "/images/siddharth.jpg",
+      image: "https://avatars.githubusercontent.com/u/140094131?v=4",
     },
     {
       name: "Harshvardhan Gadagade",
-      image: "/images/harshvardhan.jpg",
+      image: "https://avatars.githubusercontent.com/u/207767043?v=4",
     },
     {
       name: "Jatin Mali",

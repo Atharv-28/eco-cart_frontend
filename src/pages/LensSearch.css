@@ -12,6 +12,10 @@
     padding: 2rem;
     min-height: 100vh;
   }
+
+  .logo-icon{
+    font-size: 100px;
+  }
   
   .lens-header {
     text-align: center;
