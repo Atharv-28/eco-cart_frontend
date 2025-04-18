@@ -102,11 +102,6 @@ export default function HomePage() {
           <p className="text-center text-muted">No products found.</p>
         )}
       </div>
-
-      {/* Footer */}
-      <footer className="footer mt-5 py-4 text-center">
-        <p>&copy; {new Date().getFullYear()} EcoCart. Suggesting sustainable swaps since 2025.</p>
-      </footer>
     </div>
   );
 }
