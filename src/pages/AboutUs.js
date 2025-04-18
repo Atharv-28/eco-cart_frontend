@@ -16,7 +16,7 @@ function AboutUs() {
       image: "/images/harshvardhan.jpg",
     },
     {
-      name: "Jatin Mail",
+      name: "Jatin Mali",
       image: "/images/jatin.jpg",
     },
   ];
