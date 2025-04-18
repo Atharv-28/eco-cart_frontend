@@ -22,19 +22,38 @@
   border-radius: 20px;
   padding: 0.5rem 1.25rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  font-weight: 500;
 }
 
+/* Default unselected chip */
 .category-item.btn-outline-success {
+  color: #198754;
+  border-color: #198754;
+  background-color: white;
+}
+
+/* Hover on unselected chip */
+.category-item.btn-outline-success:hover {
+  background-color: #d1fae5;
   color: #198754;
   border-color: #198754;
 }
 
+/* Selected chip */
 .category-item.btn-success,
 .category-item.selected {
-  background-color: #d1fae5;
-  color: #198754;
-  border-color: #d1fae5;
+  background-color: #198754;
+  color: #ffffff;
+  border-color: #198754;
+}
+
+/* Hover on selected chip */
+.category-item.btn-success:hover,
+.category-item.selected:hover {
+  background-color: #157347;
+  color: #ffffff;
+  border-color: #157347;
 }
 
 .products-container .card {
