@@ -1,0 +1,171 @@
+/* Reset + Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f3;
+    color: #333;
+}
+
+/* Page Wrapper */
+.get-rating-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+}
+
+/* Card Styling */
+.rating-card {
+    background-color: #ffffff;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    transition: all 0.3s ease-in-out;
+}
+
+.rating-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Icon */
+.eco-icon {
+    font-size: 3rem;
+    color: #2e7d32;
+    margin-bottom: 0.5rem;
+}
+
+/* Titles & Subtitles */
+.title {
+    font-size: 2rem;
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: #4d684e;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    max-width: 320px;
+}
+
+/* Form Styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.product-link-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1.5px solid #c8e6c9;
+    transition: border-color 0.3s ease;
+}
+
+.product-link-input:focus {
+    border-color: #2e7d32;
+    outline: none;
+}
+
+/* Button */
+.get-rating-button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: fit-content;
+}
+
+.get-rating-button:hover {
+    background-color: #1b5e20;
+}
+
+/* Footer Note */
+.note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #777;
+    text-align: center;
+    max-width: 300px;
+    line-height: 1.4;
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 480px) {
+    .rating-card {
+        padding: 2rem 1.25rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .product-link-input {
+        font-size: 0.95rem;
+    }
+
+    .get-rating-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Rating Result Styling */
+.rating-result {
+    background-color: #e8f5e9;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.rating-result h2 {
+    color: #2e7d32;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.rating-result p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+/* Note Styling (Keep as is) */
+.note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #777;
+    text-align: center;
+    max-width: 300px;
+    line-height: 1.4;
+}
