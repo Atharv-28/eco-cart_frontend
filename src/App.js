@@ -1,11 +1,9 @@
-import logo from './logo.svg';
-import ProductCard from './components/ProductCard';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import GetRating from './pages/GetRating';
 import LensSearch from './pages/LensSearch';
-import AboutUs from './pages/AboutUs';
 import Header from './components/Header'; 
+import AboutUs from './pages/AboutUs';
 
 function App() {
   return (
