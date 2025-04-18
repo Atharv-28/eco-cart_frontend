@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import SearchBar from '../components/SearchBar';
 import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Home.css';
+import '../styles/home.css';
 
 const categoriesList = [
   'Toothbrush', 'Shampoo', 'Notebook', 'T-Shirt', 'Shoes',
