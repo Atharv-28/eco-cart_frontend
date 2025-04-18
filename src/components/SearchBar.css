@@ -1,0 +1,25 @@
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 1rem;
+}
+
+.search-bar-input {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar-input:focus {
+    border-color: #2e7d32;
+}

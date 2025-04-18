@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SearchBar from "../components/SearchBar";
 import '../styles/getRating.css';
 
 function GetRating() {
@@ -20,12 +21,9 @@ function GetRating() {
                 <p className="subtitle">Paste a product link below to check how eco-friendly it is 🌱</p>
                 
                 <div className="form-container">
-                    <input
-                        type="text"
-                        placeholder="Enter product link"
-                        className="product-link-input"
-                        value={productLink}
-                        onChange={(e) => setProductLink(e.target.value)}
+                    <SearchBar
+                        placeholder="Enter product link..."
+                        onSearch={setProductLink}
                     />
                     <button className="get-rating-button" onClick={handleRatingFetch}>
                         Get Rating
