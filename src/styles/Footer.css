@@ -1,9 +1,29 @@
-.footer-link {
-    text-decoration: none;
-  }
-  
-  .footer-link:hover {
-    color: #198754 !important;
-    text-decoration: underline;
-  }
-  
+.footer {
+  background-color: #e8f5e9;
+  padding: 2.5rem 1rem;
+  border-top: 2px solid #c8e6c9;
+}
+
+.footer h5,
+.footer h6 {
+  color: #2e7d32;
+}
+
+.footer p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.footer a {
+  color: inherit;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer a:hover {
+  color: #198754;
+  text-decoration: none;
+}
+
+.footer .MuiIconButton-root:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
