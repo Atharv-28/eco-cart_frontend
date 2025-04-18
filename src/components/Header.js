@@ -7,7 +7,15 @@ const Header = () => {
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
       <div className="container">
-        <NavLink className="navbar-brand fw-bold text-success" to="/">Eco-Cart</NavLink>
+        <NavLink className="navbar-brand d-flex align-items-center fw-bold text-success" to="/">
+          <img
+            src="/eco-cart.png"
+            alt="Eco-Cart Logo"
+            style={{ height: '40px', width: '40px', marginRight: '10px' }}
+          />
+          Eco-Cart
+        </NavLink>
+        
         <button
           className="navbar-toggler"
           type="button"
