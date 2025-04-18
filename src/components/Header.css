@@ -1,0 +1,17 @@
+/* src/components/Header.css */
+.navbar-brand {
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 500;
+  margin-left: 1rem;
+}
+
+.nav-link:hover {
+  color: #198754 !important; /* Bootstrap success green */
+}
+
+.nav-link.active {
+  color: #198754 !important;
+}
