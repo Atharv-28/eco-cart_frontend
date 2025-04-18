@@ -1,6 +1,9 @@
 // src/components/Header.js
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import GetRating from '../pages/GetRating';
+import LensSearch from '../pages/LensSearch';
+import AboutUs from '../pages/AboutUs';
+import 'bootstrap/dist/css/bootstrap.min.css' ;
 import './Header.css';
 
 const Header = () => {
@@ -26,13 +29,13 @@ const Header = () => {
               <a className="nav-link active" href="#">Home</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Get Rating</a>
+              <a className="nav-link" href="Get-Rating">Get Rating</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Lens Search</a>
+              <a className="nav-link" href="Lens-Search">Lens Search</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">About us</a>
+              <a className="nav-link" href="About-Us">About us</a>
             </li>
           </ul>
         </div>
