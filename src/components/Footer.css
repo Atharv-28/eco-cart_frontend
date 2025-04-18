@@ -1,14 +1,24 @@
 .footer {
   background-color: #e8f5e9;
-  padding-top: 3rem;
-  padding-bottom: 2rem;
-  margin-top: 3rem;
+  padding: 1rem 0; /* Much tighter padding */
+  margin-top: 2rem;
   border-top: 2px solid #c8e6c9;
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* Reduce padding inside the container */
+.footer .container {
+  padding: 0 !important;
+}
+
+/* Reduce padding inside the rows */
+.footer .row {
+  margin: 0 !important;
+}
+
+/* Developer and EcoCart cards */
 .developer-card {
-  border-radius: 20px !important;
+  border-radius: 30px !important; /* Increased from 20px */
   background-color: #f4fff6;
   border: 1px solid #d4edda;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -16,13 +26,8 @@
   height: 100%;
 }
 
-.developer-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-}
-
 .ecocart-card {
-  border-radius: 20px !important;
+  border-radius: 30px !important; /* Increased from 20px */
   background-color: #ffffff;
   border: 1px solid #cdeccd;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
@@ -33,10 +38,14 @@
   height: 100%;
 }
 
-.footer .MuiIconButton-root:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+/* Typography spacing tweaks */
+.developer-card .MuiCardContent-root,
+.ecocart-card .MuiCardContent-root {
+  padding: 0 !important;
 }
 
-.footer .border-top {
-  border-color: #c8e6c9 !important;
+.footer .text-center.py-3 {
+  padding: 0.6rem 0 !important;
+  margin-top: 1rem;
+  font-size: 0.85rem;
 }
