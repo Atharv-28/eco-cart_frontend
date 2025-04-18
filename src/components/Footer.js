@@ -1,72 +1,84 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/Footer.css';
-import { IconButton } from '@mui/material';
+import './Footer.css';
+import { Card, CardContent, Typography, IconButton, Box } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const developers = [
   {
-    name: 'Dev A',
-    instagram: 'https://instagram.com/dev_a',
-    github: 'https://github.com/dev-a',
-    linkedin: 'https://linkedin.com/in/dev-a'
+    name: 'Atharv Tambekar ',
+    instagram: 'https://www.instagram.com/atharv._.2005/',
+    github: 'https://github.com/Atharv-28',
+    linkedin: 'https://www.linkedin.com/in/atharv-tambekar/'
   },
   {
-    name: 'Dev B',
-    instagram: 'https://instagram.com/dev_b',
-    github: 'https://github.com/dev-b',
-    linkedin: 'https://linkedin.com/in/dev-b'
+    name: 'Siddharth Vhatkar',
+    instagram: 'https://www.instagram.com/siddharthvhatkar/',
+    github: 'https://github.com/SiddharthThe',
+    linkedin: 'https://www.linkedin.com/in/siddharth-vhatkar-08460a282/'
   },
   {
-    name: 'Dev C',
-    instagram: 'https://instagram.com/dev_c',
-    github: 'https://github.com/dev-c',
-    linkedin: 'https://linkedin.com/in/dev-c'
+    name: 'Harshvardhan Gadagade',
+    instagram: 'https://www.instagram.com/haa.arshh/',
+    github: 'https://github.com/HA24RSH',
+    linkedin: 'https://linkedin.com'
   },
   {
-    name: 'Dev D',
-    instagram: 'https://instagram.com/dev_d',
-    github: 'https://github.com/dev-d',
-    linkedin: 'https://linkedin.com/in/dev-d'
+    name: 'Jatin Mali',
+    instagram: 'https://www.instagram.com/jatin.m03/',
+    github: 'https://github.com/WHITEDEVIL333X',
+    linkedin: 'https://www.linkedin.com/in/jatin-mali-80b056361/'
   }
 ];
 
 const Footer = () => {
   return (
-    <footer className="footer shadow-sm">
-      <div className="container">
-        <div className="row align-items-start text-start">
-          <div className="col-md-6 mb-4">
-            <h5 className="text-success fw-bold">Eco-Cart</h5>
-            <p className="text-muted">
-              Sustainable choices, smarter living. <br />
-              Eco-friendly products for a better tomorrow.
-            </p>
-            <h6 className="text-uppercase fw-bold mb-3">Developers</h6>
-            <div className="d-flex flex-wrap">
-              {developers.map((dev, index) => (
-                <div key={index} className="me-4 mb-2">
-                  <p className="mb-1 fw-semibold">{dev.name}</p>
-                  <IconButton href={dev.instagram} target="_blank" size="small">
-                    <InstagramIcon sx={{ color: '#E1306C' }} />
-                  </IconButton>
-                  <IconButton href={dev.linkedin} target="_blank" size="small">
-                    <LinkedInIcon sx={{ color: '#0077B5' }} />
-                  </IconButton>
-                  <IconButton href={dev.github} target="_blank" size="small">
-                    <GitHubIcon sx={{ color: '#333' }} />
-                  </IconButton>
+    <footer className="footer">
+      <div className="container py-4">
+        <div className="row d-flex justify-content-between flex-wrap">
+
+          {/* Developer Cards in pairs */}
+          <div className="col-lg-7">
+            <div className="row">
+              {developers.map((dev, idx) => (
+                <div className="col-md-6 mb-4" key={idx}>
+                  <Card className="developer-card p-3">
+                    <CardContent className="text-center">
+                      <Typography variant="h6" className="fw-semibold mb-2">{dev.name}</Typography>
+                      <Box display="flex" justifyContent="center" gap={1}>
+                        <IconButton href={dev.instagram} target="_blank">
+                          <InstagramIcon sx={{ color: '#E1306C' }} />
+                        </IconButton>
+                        <IconButton href={dev.linkedin} target="_blank">
+                          <LinkedInIcon sx={{ color: '#0077B5' }} />
+                        </IconButton>
+                        <IconButton href={dev.github} target="_blank">
+                          <GitHubIcon sx={{ color: '#333' }} />
+                        </IconButton>
+                      </Box>
+                    </CardContent>
+                  </Card>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="col-md-6 mb-4 text-md-end">
-            <h6 className="text-uppercase fw-bold mb-3">Contact Us</h6>
-            <p className="text-muted mb-1">📧 support@ecocart.com</p>
-            <p className="text-muted">📞 +91-9876543210</p>
+          {/* Eco-Cart Info */}
+          <div className="col-lg-4 mt-4 mt-lg-0">
+            <Card className="ecocart-card p-3">
+              <CardContent>
+                <Typography variant="h5" className="text-success fw-bold mb-2">Eco-Cart</Typography>
+                <Typography variant="body2" className="text-muted mb-3">
+                  Sustainable choices, smarter living. <br />
+                  Eco-friendly products for a better tomorrow.
+                </Typography>
+                <Typography variant="subtitle1" className="fw-bold mb-1">Contact Us</Typography>
+                <Typography variant="body2" className="text-muted mb-1">📧 support@ecocart.com</Typography>
+                <Typography variant="body2" className="text-muted">📞 +91-9876543210</Typography>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
