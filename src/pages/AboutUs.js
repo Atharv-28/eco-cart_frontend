@@ -4,7 +4,7 @@ import "../styles/AboutUs.css";
 function AboutUs() {
   const developers = [
     {
-      name: "Athrav Tambekar",
+      name: "Atharv Tambekar",
       image: "/images/athrav.jpg", // Adjust paths as needed
     },
     {
