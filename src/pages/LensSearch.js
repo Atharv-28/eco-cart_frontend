@@ -38,9 +38,6 @@ export default function LensSearchPage() {
     console.log("Fetching details for image:", selectedFile.name);
     // You can convert it to Base64, send via FormData, etc.
 
-    <div className="product-card-container">
-      <ProductCard id={1} name="Sample Product" link="#" img={URL.createObjectURL(selectedFile)} rating={4.5} rating_description="Great product!" material="Bamboo" />
-    </div>
   };
 
   return (
