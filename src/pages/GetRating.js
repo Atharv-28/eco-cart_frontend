@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import '../styles/getRating.css';
+import axios from "axios";
 
 function GetRating() {
     const [rating, setRating] = useState(null);
     const [review, setReview] = useState(null);
     const [productLink, setProductLink] = useState("");
+    const [productData, setProductData] = useState(null); // To store the response data
+    const [error, setError] = useState(null); // To handle errors
 
-    const handleRatingFetch = () => {
-        // Placeholder for Firebase functionality
-        // Simulating a response for demonstration
-        setRating(4.5);  // Example rating from database
-        setReview("This product is highly recommended for eco-conscious buyers. It’s sustainable and made from recycled materials.");
+    const handleRatingFetch = async () => {
+        try {
+            const response = await axios.post("http://127.0.0.1:5000/scrape", {
+                url: productLink,
+            });
+
+            console.log("Full response data:", response.data);
+
+            const { image_url, material, title, brand } = response.data;
+            setProductData({ image_url, material, title, brand });
+            setRating(4.5);
+            setReview("This product is highly recommended for eco-conscious buyers. It’s sustainable and made from recycled materials.");
+            setError(null);
+
+            console.log("Image URL:", image_url);
+        } catch (err) {
+            console.error("Error fetching product data:", err);
+            setError("Failed to fetch product data. Please try again.");
+        }
     };
 
     return (
@@ -29,6 +46,18 @@ function GetRating() {
                         Get Rating
                     </button>
                 </div>
+
+                {error && <p className="error-message">{error}</p>}
+
+                {productData && (
+                    <div className="product-details">
+                        <h2>Product Details</h2>
+                        <img src={productData.image_url} alt="failed to load" className="product-image" />
+                        <p><strong>Title:</strong> {productData.title}</p>
+                        <p><strong>Brand:</strong> {productData.brand}</p>
+                        <p><strong>Material:</strong> {productData.material}</p>
+                    </div>
+                )}
 
                 {rating && review && (
                     <div className="rating-result">
