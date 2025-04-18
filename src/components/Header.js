@@ -1,8 +1,4 @@
-// src/components/Header.js
 import React from 'react';
-import GetRating from '../pages/GetRating';
-import LensSearch from '../pages/LensSearch';
-import AboutUs from '../pages/AboutUs';
 import 'bootstrap/dist/css/bootstrap.min.css' ;
 import './Header.css';
 
