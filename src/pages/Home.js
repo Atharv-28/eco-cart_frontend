@@ -4,10 +4,10 @@ import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
 
-const categoriesList = [
-  'Toothbrush', 'Shampoo', 'Notebook', 'T-Shirt', 'Shoes',
-  'Coffee Mug', 'Phone Case', 'Water Bottle'
-];
+// const categoriesList = [
+//   'Toothbrush', 'Shampoo', 'Notebook', 'T-Shirt', 'Shoes',
+//   'Coffee Mug', 'Phone Case', 'Water Bottle'
+// ];
 
 const filterOptions = [
   { value: 'all', label: 'All' },
@@ -76,7 +76,7 @@ export default function HomePage() {
       </div>
 
       {/* Category Chips */}
-      <div className="categories-container mt-4">
+      {/*<div className="categories-container mt-4">
         {categoriesList.map(cat => (
           <button
             key={cat}
@@ -86,7 +86,7 @@ export default function HomePage() {
             {cat}
           </button>
         ))}
-      </div>
+      </div>*/}
 
       {/* Product Results */}
       <div className="products-container mt-5">
