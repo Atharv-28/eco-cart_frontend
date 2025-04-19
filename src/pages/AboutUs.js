@@ -58,6 +58,52 @@ function AboutUs() {
               </a>
             ))}
           </div>
+
+          <div className="tech-stack">
+            <h2>Tech Stack Used</h2>
+
+            {/* Frontend Stack */}
+            <div className="tech-category">
+              <h3>Frontend</h3>
+              <div className="tech-icons">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" title="React" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" title="Bootstrap" />
+              </div>
+            </div>
+
+            {/* Backend Stack */}
+            <div className="tech-category">
+              <h3>Backend</h3>
+              <div className="tech-icons">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" title="Node.js" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express" title="Express" style={{ backgroundColor: "#fff", padding: "5px", borderRadius: "6px" }} />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" title="Flask" />
+              </div>
+            </div>
+          </div>
+
+          <div className="google-apis">
+            <h2>Google Services / APIs</h2>
+            <div className="google-api-list">
+
+              <div className="api-card">
+                <img src="https://firebase.google.com/downloads/brand-guidelines/PNG/logo-logomark.png" alt="Firebase" />
+                <span>Firebase</span>
+              </div>
+
+              <div className="api-card">
+                <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/1.44.0/files/light/gemini-color.png" alt="Gemini" />
+                <span>Gemini</span>
+              </div>
+
+              <div className="api-card">
+                <img src="https://cdn-icons-png.flaticon.com/128/104/104075.png" alt="Google Custom Search" />
+                <span>Custom Search API</span>
+              </div>
+            </div>
+          </div>
+
           <p className="dev-tagline">With passion for the planet 🌍</p>
         </div>
       </div>
