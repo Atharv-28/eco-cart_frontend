@@ -32,7 +32,7 @@ html {
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 80vw;
     transition: all 0.3s ease-in-out;
 }
 
@@ -100,6 +100,7 @@ html {
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: fit-content;
+    margin-bottom: 5vh;
 }
 
 .get-rating-button:hover {
@@ -114,6 +115,24 @@ html {
     text-align: center;
     max-width: 300px;
     line-height: 1.4;
+}
+
+.alternative-products-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 60vw;
+}
+
+.alternative-products{
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 50vw;
 }
 
 /* Responsive Adjustments */
