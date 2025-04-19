@@ -5,7 +5,7 @@ import LensSearch from './pages/LensSearch';
 import Header from './components/Header'; 
 import AboutUs from './pages/AboutUs';
 import Footer from './components/Footer';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './pages/Admin/AdminDashboard';
 function App() {
   return (
     <Router>
