@@ -1,0 +1,160 @@
+/* General Styles */
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  }
+  
+  /* Side Navigation */
+  .side-nav {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white !important;
+    width: 280px !important;
+  }
+  
+  .side-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+    text-align: left;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .side-nav .nav-link:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .menu-btn {
+    padding: 0.5rem;
+    color: #2ecc71;
+  }
+  
+  .search-bar {
+    flex: 1;
+    position: relative;
+    max-width: 500px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 0.75rem 2.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  .search-bar input:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+  }
+  
+  /* Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .metric-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .metric-card h3 {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+  
+  .metric-card p {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .metric-card.primary { border-left: 4px solid #2ecc71; }
+  .metric-card.success { border-left: 4px solid #28a745; }
+  .metric-card.warning { border-left: 4px solid #ffc107; }
+  
+  /* Products Section */
+  .products-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .add-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .products-table {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    background: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .actions button {
+    padding: 0.5rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 1rem;
+    }
+    
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }

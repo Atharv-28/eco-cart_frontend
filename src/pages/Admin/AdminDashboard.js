@@ -1,88 +1,174 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Pencil, Trash, Search, List, Person, BoxArrowRight } from 'react-bootstrap-icons';
+import { Offcanvas, Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Pencil, Trash } from 'react-bootstrap-icons';
+import AddProduct from './AddProduct';
+import './AdminDashboard.css';
 
 export default function AdminDashboard() {
-  // Sample data; replace with API calls
+  const navigate = useNavigate();
   const [products, setProducts] = useState([
     { id: '101', name: 'Bamboo Toothbrush', material: 'Bamboo', rating: 4.5 },
     { id: '102', name: 'Compostable Phone Case', material: 'Bioplastic', rating: 4.2 },
     { id: '103', name: 'Reusable Water Bottle', material: 'Stainless Steel', rating: 4.8 },
   ]);
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Sample metrics
+  // Metrics data
   const totalProducts = products.length;
-  const totalSearches = 1284;          // stub: fetch from analytics
-  const approvedSuggestions = 342;     // stub: fetch from backend
+  const totalSearches = 1284;
+  const approvedSuggestions = 342;
+
+  // Filter products based on search
+  const filteredProducts = products.filter(product => 
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    product.material.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleDelete = () => {
+    setProducts(products.filter(product => product.id !== selectedProduct));
+    setShowDeleteModal(false);
+  };
+
+  const handleLogout = () => {
+    // Add logout logic here
+    navigate('/login');
+  };
 
   return (
-    <div className="container-fluid p-4">
-      {/* Metrics Section */}
-      <div className="row g-4 mb-4">
-        <div className="col-md-4">
-          <div className="card text-white bg-primary h-100">
-            <div className="card-body">
-              <h5 className="card-title">Total Products</h5>
-              <p className="card-text display-6">{totalProducts}</p>
+    <div className="admin-dashboard">
+      {/* Navigation Drawer */}
+      <Offcanvas show={showDrawer} onHide={() => setShowDrawer(false)} className="side-nav">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>EcoCart Admin</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <nav className="nav flex-column">
+            <Button variant="link" className="nav-link active">
+              <List size={20} className="me-2" /> Dashboard
+            </Button>
+            <Button variant="link" className="nav-link">
+              <Person size={20} className="me-2" /> User Management
+            </Button>
+            <div className="mt-auto">
+              <Button variant="link" className="nav-link text-danger" onClick={handleLogout}>
+                <BoxArrowRight size={20} className="me-2" /> Logout
+              </Button>
             </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="card text-white bg-success h-100">
-            <div className="card-body">
-              <h5 className="card-title">Total Searches Today</h5>
-              <p className="card-text display-6">{totalSearches}</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="card text-white bg-warning h-100">
-            <div className="card-body">
-              <h5 className="card-title">Approved Suggestions</h5>
-              <p className="card-text display-6">{approvedSuggestions}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+          </nav>
+        </Offcanvas.Body>
+      </Offcanvas>
 
-      {/* Products Table Section */}
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h3 className="mb-0">Products</h3>
-        <button className="btn btn-outline-primary">
-          Add Product
-        </button>
-      </div>
+      {/* Delete Confirmation Modal */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete this product? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-      <div className="table-responsive shadow-sm">
-        <table className="table table-striped table-hover align-middle mb-0">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Material</th>
-              <th scope="col">Rating</th>
-              <th scope="col" className="text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.material}</td>
-                <td>{product.rating.toFixed(1)}</td>
-                <td className="text-center">
-                  <button className="btn btn-sm btn-outline-light me-2 bg-primary" title="Edit">
-                    <Pencil />
-                  </button>
-                  <button className="btn btn-sm btn-outline-light bg-danger" title="Delete">
-                    <Trash />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Main Content */}
+      <div className="main-content">
+        {/* Header */}
+        <header className="dashboard-header">
+          <Button variant="link" onClick={() => setShowDrawer(true)} className="menu-btn">
+            <List size={24} />
+          </Button>
+          <div className="search-bar">
+            <Search className="search-icon" />
+            <input 
+              type="text" 
+              placeholder="Search products..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </header>
+
+        {/* Metrics Cards */}
+        <div className="metrics-grid">
+          <div className="metric-card primary">
+            <h3>Total Products</h3>
+            <p>{totalProducts}</p>
+          </div>
+          <div className="metric-card success">
+            <h3>Total Searches</h3>
+            <p>{totalSearches}</p>
+          </div>
+          <div className="metric-card warning">
+            <h3>Total Users</h3>
+            <p>{approvedSuggestions}</p>
+          </div>
+        </div>
+
+        {/* Products Section */}
+        <div className="products-section">
+          <div className="section-header">
+            <h2>Products</h2>
+            <Button 
+              variant="primary" 
+              onClick={() => navigate('/AddProduct')}
+              className="add-btn"
+            >
+              Add Product
+            </Button>
+          </div>
+          
+          <div className="products-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Material</th>
+                  <th>Rating</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProducts.map((product) => (
+                  <tr key={product.id}>
+                    <td>{product.id}</td>
+                    <td>{product.name}</td>
+                    <td>{product.material}</td>
+                    <td>{product.rating.toFixed(1)}</td>
+                    <td className="actions">
+                      <Button 
+                        variant="link" 
+                        onClick={() => navigate('/AddProduct', { state: { product } })}
+                      >
+                        <Pencil className="text-primary" />
+                      </Button>
+                      <Button 
+                        variant="link" 
+                        onClick={() => {
+                          setSelectedProduct(product.id);
+                          setShowDeleteModal(true);
+                        }}
+                      >
+                        <Trash className="text-danger" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );
