@@ -3,6 +3,7 @@ import SearchBar from "../components/SearchBar";
 import "../styles/getRating.css";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+import { dynamicUpload } from "../components/util.js/dynamicUpload";
 
 function GetRating() {
   const [rating, setRating] = useState(null);
@@ -52,26 +53,43 @@ function GetRating() {
 
   const rateEco = async (title, brand, material) => {
     try {
-        const response = await axios.post("http://127.0.0.1:3000/gemini-getRating", {
-            title: title,
-            brand: brand,
-            material: material,
-        });
-        console.log("Rating API response:", response.data);
+      const response = await axios.post(
+        "http://127.0.0.1:3000/gemini-getRating",
+        {
+          title: title,
+          brand: brand,
+          material: material,
+        }
+      );
+      console.log("Rating API response:", response.data);
 
-        const { rating, description } = response.data;
+      const { rating, description, category } = response.data;
 
-        const parsedRating = parseInt(rating);
+      const parsedRating = parseInt(rating);
 
-        console.log("Parsed rating:", parsedRating);
+      console.log("Parsed rating:", parsedRating);
 
-        // Store the rating and description in state
-        setRating(rating);
-        setDesc(description);
-        setError(null);
+      setRating(rating);
+      setDesc(description);
+      setError(null);
+
+      // Only good eco products uploading
+      if (rating >= 3) {
+        const productDetails = {
+          id: category,
+          name: title,
+          link: productLink,
+          img: image_url,
+          rating: rating,
+          description: description,
+          material: material,
+        };
+        console.log("Uploading product to Firestore:", productDetails);
+        await dynamicUpload(productDetails);
+      }
     } catch (err) {
-        console.error("Error fetching rating and review:", err);
-        setError("Failed to fetch rating and review. Please try again.");
+      console.error("Error fetching rating and review:", err);
+      setError("Failed to fetch rating and review. Please try again.");
     }
   };
 
