@@ -5,7 +5,7 @@ import LensSearch from './pages/LensSearch';
 import Header from './components/Header'; 
 import AboutUs from './pages/AboutUs';
 import Footer from './components/Footer';
-
+import AdminDashboard from './pages/AdminDashboard';
 function App() {
   return (
     <Router>
@@ -15,6 +15,8 @@ function App() {
         <Route path="/Get-Rating" element={<GetRating />} />
         <Route path="/Lens-Search" element={<LensSearch />} />
         <Route path="/About-Us" element={<AboutUs />} />
+        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+
         {/* Fallback route for unmatched paths */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
