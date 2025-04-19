@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../components/util.js/config';
+import { db } from '../components/util/config';
 import SearchBar from '../components/SearchBar';
 import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';

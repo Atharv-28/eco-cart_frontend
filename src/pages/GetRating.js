@@ -3,7 +3,7 @@ import SearchBar from "../components/SearchBar";
 import "../styles/getRating.css";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
-import { dynamicUpload } from "../components/util.js/dynamicUpload";
+import { dynamicUpload } from "../components/util/dynamicUpload";
 
 function GetRating() {
   const [rating, setRating] = useState(null);
