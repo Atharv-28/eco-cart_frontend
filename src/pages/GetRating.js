@@ -106,7 +106,7 @@ function GetRating() {
             description,
             material,
           };
-          await dynamicUpload(productDetails);
+        //   await dynamicUpload(productDetails);
         } else {
           suggestAlternative(category);
         }

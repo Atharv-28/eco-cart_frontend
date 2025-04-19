@@ -116,6 +116,24 @@ html {
     line-height: 1.4;
 }
 
+.alternative-products-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 60vw;
+}
+
+.alternative-products{
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 50vw;
+}
+
 /* Responsive Adjustments */
 @media screen and (max-width: 480px) {
     .rating-card {
