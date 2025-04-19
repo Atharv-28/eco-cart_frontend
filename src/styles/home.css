@@ -66,17 +66,52 @@
   font-size: 0.9rem;
   color: #6c757d;
 }
-/* Add to existing styles */
+
 .pagination-container {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem; /* Space between buttons and info */
 }
 
-.pagination-container button:disabled {
-  opacity: 0.5;
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+  background-color: #198754; /* Bootstrap success green */
+  color: white;
+  border: none;
+  border-radius: 25px; /* Softer rounded corners */
+  padding: 0.6rem;
+  width: 40px; /* Fixed width for circular buttons */
+  height: 40px; /* Fixed height for circular buttons */
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for depth */
+}
+
+.pagination-button:hover {
+  background-color: #157347; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+.pagination-button:disabled {
+  background-color: #c8e6c9; /* Lighter green for disabled state */
+  color: #6c757d; /* Muted text color */
   cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.pagination-icon {
+  font-size: 1.2rem; /* Adjust icon size */
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #198754; /* Match the green theme */
 }
 
 .page-info {

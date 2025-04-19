@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar';
 import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import icons from react-icons
 
 // ... (keep existing filterOptions array and imports)
 const filterOptions = [
@@ -87,23 +88,23 @@ export default function HomePage() {
 
   // Pagination controls component
   const Pagination = ({ currentPage, totalPages, onPageChange }) => (
-    <div className="d-flex justify-content-center align-items-center my-4 gap-2">
+    <div className="pagination-container">
       <button
-        className="btn btn-success btn-sm"
+        className="pagination-button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
-        Previous
+        <FaArrowLeft className="pagination-icon" /> {/* Left arrow icon */}
       </button>
-      <span className="mx-2">
+      <span className="pagination-info">
         Page {currentPage} of {totalPages}
       </span>
       <button
-        className="btn btn-success btn-sm"
+        className="pagination-button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages || totalPages === 0}
       >
-        Next
+        <FaArrowRight className="pagination-icon" /> {/* Right arrow icon */}
       </button>
     </div>
   );
