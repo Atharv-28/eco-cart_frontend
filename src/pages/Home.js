@@ -89,7 +89,7 @@ export default function HomePage() {
   const Pagination = ({ currentPage, totalPages, onPageChange }) => (
     <div className="d-flex justify-content-center align-items-center my-4 gap-2">
       <button
-        className="btn btn-primary btn-sm"
+        className="btn btn-success btn-sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -99,7 +99,7 @@ export default function HomePage() {
         Page {currentPage} of {totalPages}
       </span>
       <button
-        className="btn btn-primary btn-sm"
+        className="btn btn-success btn-sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages || totalPages === 0}
       >

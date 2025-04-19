@@ -1,12 +1,41 @@
 import { useState, useCallback } from 'react';
-import { FiUpload, FiCamera, FiClock, FiSearch } from 'react-icons/fi';
+import { FiUpload, FiCamera, FiSearch, FiChevronDown } from 'react-icons/fi';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import './LensSearch.css';
-import ProductCard from '../components/ProductCard'; // Assuming you have a ProductCard component
+import ProductCard from '../components/ProductCard';
+
 export default function LensSearchPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [alternatives, setAlternatives] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showMore, setShowMore] = useState(false);
 
+  // Simulated API call to fetch alternatives
+  const fetchImageDetails = async () => {
+    if (!selectedFile) return;
+    
+    setLoading(true);
+    setError('');
+    try {
+      // Simulated API response
+      const mockAlternatives = [
+        { id: 1, name: 'Bamboo Toothbrush', rating: 4.5, ecoScore: 9 },
+        { id: 2, name: 'Reusable Silicone Bags', rating: 4.8, ecoScore: 9.5 },
+        { id: 3, name: 'Organic Cotton Tote', rating: 4.7, ecoScore: 8.8 },
+        { id: 4, name: 'Glass Food Containers', rating: 4.6, ecoScore: 9.2 },
+      ];
+
+      setTimeout(() => {
+        setAlternatives(mockAlternatives);
+        setLoading(false);
+      }, 1500);
+    } catch (err) {
+      setError('Failed to fetch alternatives');
+      setLoading(false);
+    }
+  };
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -33,13 +62,7 @@ export default function LensSearchPage() {
     }
   };
 
-  const fetchImageDetails = () => {
-    if (!selectedFile) return;
-    // API call logic goes here
-    console.log("Fetching details for image:", selectedFile.name);
-    // You can convert it to Base64, send via FormData, etc.
-
-  };
+  
 
   return (
     <div className="lens-container">
@@ -48,7 +71,6 @@ export default function LensSearchPage() {
           <CenterFocusWeakIcon className="logo-icon" />
           <h1>EcoLens</h1>
         </div>
-
         <h2>Scan Products for Sustainability Insights</h2>
       </header>
 
@@ -89,24 +111,51 @@ export default function LensSearchPage() {
 
         {/* Button below container */}
         {selectedFile && (
-          <div className="find-button-container">
-            <button className="find-button" onClick={fetchImageDetails}>
-              <FiSearch /> Find Details
+          <div className="action-container">
+            <button 
+              className="find-button" 
+              onClick={fetchImageDetails}
+              disabled={loading}
+            >
+              {loading ? (
+                <div className="spinner"></div>
+              ) : (
+                <>
+                  <FiSearch /> Analyze Sustainability
+                </>
+              )}
             </button>
           </div>
         )}
 
-        <div className="recent-scans">
-          <h3><FiClock /> Recent Scans</h3>
-          <div className="scan-grid">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="scan-item">
-                <div className="scan-image-placeholder" />
-                <p>Bamboo Toothbrush</p>
-              </div>
-            ))}
-          </div>
-        </div>
+{error && <p className="error-message">{error}</p>}
+
+{alternatives.length > 0 && (
+  <div className="alternatives-section">
+    <h3><span className="eco-badge">♻️</span> Eco-Friendly Alternatives</h3>
+    
+    <div className="alternatives-grid">
+      {alternatives
+        .slice(0, showMore ? alternatives.length : 3)
+        .map(product => (
+          <ProductCard 
+            key={product.id}
+            {...product}
+            ecoScore={product.ecoScore}
+          />
+        ))}
+    </div>
+
+    {alternatives.length > 3 && !showMore && (
+      <button 
+        className="show-more-btn"
+        onClick={() => setShowMore(true)}
+      >
+        Show More Alternatives <FiChevronDown />
+      </button>
+    )}
+  </div>
+)}
       </main>
     </div>
   );
