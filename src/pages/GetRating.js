@@ -52,7 +52,7 @@ function GetRating() {
 
   const rateEco = async (title, brand, material) => {
     try {
-        const response = await axios.post("http://127.0.0.1:3000/gemini-test", {
+        const response = await axios.post("http://127.0.0.1:3000/gemini-getRating", {
             title: title,
             brand: brand,
             material: material,
