@@ -1,14 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
-import { Card, CardContent, Typography, IconButton, Box } from '@mui/material';
+import { Typography, IconButton, Box } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const developers = [
   {
-    name: 'Atharv Tambekar ',
+    name: 'Atharv Tambekar',
     instagram: 'https://www.instagram.com/atharv._.2005/',
     github: 'https://github.com/Atharv-28',
     linkedin: 'https://www.linkedin.com/in/atharv-tambekar/'
@@ -34,55 +34,53 @@ const developers = [
 ];
 
 const Footer = () => {
+  const topRow = developers.slice(0, 2);
+  const bottomRow = developers.slice(2);
+
   return (
     <footer className="footer">
-      <div className="container py-4">
-        <div className="row d-flex justify-content-between flex-wrap">
-
-          {/* Developer Cards in pairs */}
-          <div className="col-lg-7">
-            <div className="row">
-              {developers.map((dev, idx) => (
-                <div className="col-md-6 mb-4" key={idx}>
-                  <Card className="developer-card p-3">
-                    <CardContent className="text-center">
-                      <Typography variant="h6" className="fw-semibold mb-2">{dev.name}</Typography>
-                      <Box display="flex" justifyContent="center" gap={1}>
-                        <IconButton href={dev.instagram} target="_blank">
-                          <InstagramIcon sx={{ color: '#E1306C' }} />
+      <div className="container py-3">
+        <div className="row justify-content-between">
+          {/* Developer Names with Hover Icons in 2 rows */}
+          <div className="col-lg-6">
+            <div className="developer-list">
+              {[topRow, bottomRow].map((group, i) => (
+                <div key={i} className="d-flex gap-4 mb-2 flex-wrap">
+                  {group.map((dev, idx) => (
+                    <div className="developer-item" key={idx}>
+                      <span>{dev.name}</span>
+                      <div className="developer-icons">
+                        <IconButton href={dev.instagram} target="_blank" size="small" className="icon-link">
+                          <InstagramIcon fontSize="small" />
                         </IconButton>
-                        <IconButton href={dev.linkedin} target="_blank">
-                          <LinkedInIcon sx={{ color: '#0077B5' }} />
+                        <IconButton href={dev.linkedin} target="_blank" size="small" className="icon-link">
+                          <LinkedInIcon fontSize="small" />
                         </IconButton>
-                        <IconButton href={dev.github} target="_blank">
-                          <GitHubIcon sx={{ color: '#333' }} />
+                        <IconButton href={dev.github} target="_blank" size="small" className="icon-link">
+                          <GitHubIcon fontSize="small" />
                         </IconButton>
-                      </Box>
-                    </CardContent>
-                  </Card>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Eco-Cart Info */}
-          <div className="col-lg-4 mt-4 mt-lg-0">
-            <Card className="ecocart-card p-3">
-              <CardContent>
-                <Typography variant="h5" className="text-success fw-bold mb-2">Eco-Cart</Typography>
-                <Typography variant="body2" className="text-muted mb-3">
-                  Sustainable choices, smarter living. <br />
-                  Eco-friendly products for a better tomorrow.
-                </Typography>
-                <Typography variant="subtitle1" className="fw-bold mb-1">Contact Us</Typography>
-                <Typography variant="body2" className="text-muted mb-1">📧 support@ecocart.com</Typography>
-                <Typography variant="body2" className="text-muted">📞 +91-9876543210</Typography>
-              </CardContent>
-            </Card>
+          {/* Eco-Cart Info (now inline, no card) */}
+          <div className="col-lg-6 mt-4 mt-lg-0">
+            <div className="ecocart-info">
+              <Typography variant="h6" className="text-success fw-bold mb-2">Eco-Cart</Typography>
+              <Typography variant="body2" className="text-muted mb-2">
+                Sustainable choices, smarter living.<br />Eco-friendly products for a better tomorrow.
+              </Typography>
+              <Typography variant="body2" className="text-muted mb-1">📧 support@ecocart.com</Typography>
+              <Typography variant="body2" className="text-muted">📞 +91-9876543210</Typography>
+            </div>
           </div>
         </div>
 
-        <div className="text-center py-3 border-top text-muted small mt-4">
+        <div className="text-center py-2 border-top text-muted small mt-3">
           © {new Date().getFullYear()} Eco-Cart. All rights reserved.
         </div>
       </div>
