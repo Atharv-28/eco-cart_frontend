@@ -4,15 +4,45 @@ import badge from "../assets/eco-badge.png";
 import './ProductCard.css';
 
 export default function AnimatedCard(props) {
-  const { id, name, link, img, rating, rating_description, material } = props;
+  const { id, name, link, img, rating, rating_description, material, brand } = props;
 
-  const ratingStars = Array.from({ length: 5 }, (_, i) => i < Math.round(rating));
+  const [animatedName, setAnimatedName] = useState('');
+  const [filledStars, setFilledStars] = useState(0);
+
+  useEffect(() => {
+    // Animate the name
+    let nameIndex = 0;
+    const nameInterval = setInterval(() => {
+      if (nameIndex < name.length) {
+        setAnimatedName((prev) => prev + name[nameIndex]);
+        nameIndex++;
+      } else {
+        clearInterval(nameInterval);
+      }
+    }, 50); // Typing speed for the name
+
+    // Animate the stars
+    let starIndex = 0;
+    const starInterval = setInterval(() => {
+      if (starIndex < Math.round(rating)) {
+        setFilledStars((prev) => prev + 1);
+        starIndex++;
+      } else {
+        clearInterval(starInterval);
+      }
+    }, 500); // 0.5s delay for each star
+
+    return () => {
+      clearInterval(nameInterval);
+      clearInterval(starInterval);
+    };
+  }, [name, rating]);
 
   return (
     <div
       className="card shadow-sm h-100 product-card"
       style={{
-        maxWidth: '480px', // Increased maxWidth for better content fit
+        maxWidth: '480px',
         borderRadius: '16px',
         padding: '10px',
         transition: 'all 0.3s',
@@ -22,7 +52,7 @@ export default function AnimatedCard(props) {
       <div
         className="position-relative overflow-hidden bg-light product-image-container"
         style={{
-          height: '240px', // Increased height for better image visibility
+          height: '240px',
           borderRadius: '12px',
           padding: '6px',
           marginBottom: '10px',
@@ -49,6 +79,7 @@ export default function AnimatedCard(props) {
       {/* Product Details Section */}
       <div className="card-body pt-1">
         <div className="d-flex justify-content-between align-items-start mb-2">
+          {/* Animated Name */}
           <h5
             className="card-title mb-0"
             style={{
@@ -59,7 +90,7 @@ export default function AnimatedCard(props) {
               fontSize: '1.1rem',
             }}
           >
-            {name}
+            {animatedName}
           </h5>
           <a
             href={link}
@@ -76,21 +107,25 @@ export default function AnimatedCard(props) {
         <p className="card-text text-muted mb-2">
           <strong>Material:</strong> {material}
         </p>
+        <p className="card-text text-muted mb-2">
+          <strong>Brand:</strong> {brand}
+        </p>
 
+        {/* Animated Stars */}
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex me-2">
-            {ratingStars.map((filled, index) =>
-              filled ? (
+            {Array.from({ length: 5 }, (_, index) =>
+              index < filledStars ? (
                 <StarFill
                   key={index}
                   className="text-success"
-                  style={{ marginRight: '2px' }}
+                  style={{ marginRight: '2px', transition: 'all 0.3s ease-in-out' }}
                 />
               ) : (
                 <Star
                   key={index}
                   className="text-success"
-                  style={{ marginRight: '2px' }}
+                  style={{ marginRight: '2px', transition: 'all 0.3s ease-in-out' }}
                 />
               )
             )}
@@ -98,6 +133,7 @@ export default function AnimatedCard(props) {
           <span className="text-muted">({rating})</span>
         </div>
 
+        {/* Animated Description */}
         <TypingEffect text={rating_description} />
       </div>
     </div>
@@ -109,6 +145,8 @@ const TypingEffect = ({ text = '' }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
+    if (typeof text !== 'string') return;
+  
     let index = 0;
     const interval = setInterval(() => {
       if (index < text.length) {
@@ -117,10 +155,11 @@ const TypingEffect = ({ text = '' }) => {
       } else {
         clearInterval(interval);
       }
-    }, 50); // Typing speed (50ms per character)
-
+    }, 50);
+  
     return () => clearInterval(interval);
   }, [text]);
+  
 
   return (
     <p
