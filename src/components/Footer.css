@@ -1,8 +1,7 @@
 .footer {
   background-color: #e8f5e9;
-  padding: 1rem 0; /* Much tighter padding */
-  margin-top: 2rem;
-  border-top: 2px solid #c8e6c9;
+  padding: 0.5rem 0;
+  border-top: 1px solid #c8e6c9;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -11,9 +10,11 @@
   padding: 0 !important;
 }
 
-/* Reduce padding inside the rows */
+/* Use flexbox for alignment */
 .footer .row {
-  margin: 0 !important;
+  display: flex;
+  justify-content: space-between; /* Space between left, center, and right sections */
+  align-items: center; /* Vertically align items */
 }
 
 /* Developer and EcoCart cards */
@@ -45,7 +46,86 @@
 }
 
 .footer .text-center.py-3 {
-  padding: 0.6rem 0 !important;
+  padding: 1rem 0 !important;
+  margin: 0 !important;
   margin-top: 1rem;
   font-size: 0.85rem;
+}
+
+.developer-list {
+  display: grid; /* Use grid layout for pairs */
+  grid-template-columns: repeat(2, 1fr); /* Two columns for developers */
+  gap: 1rem; /* Space between developer items */
+  text-align: center;
+}
+
+.developer-item {
+  margin-bottom: 0; /* Remove vertical spacing */
+}
+
+.developer-item span {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.developer-icons {
+  gap: 0.5rem; /* Minimal space between icons */
+}
+
+.developer-icons .icon-link {
+  color: #198754;
+  transition: color 0.3s ease;
+}
+
+.developer-icons .icon-link:hover {
+  color: #145a32;
+}
+
+.contact-us {
+  text-align: right;
+}
+
+.contact-us h5 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #198754;
+}
+
+.contact-us p {
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.contact-us a {
+  color: #145a32;
+  text-decoration: none;
+}
+
+.contact-us a:hover {
+  text-decoration: underline;
+}
+
+.footer .text-center {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Space between logo and text */
+}
+
+.branding-logo {
+  width: 30px; /* Adjust the size of the logo */
+  height: 30px;
+  object-fit: contain; /* Ensure the logo fits within the dimensions */
+}
+
+.eco-cart-branding {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #198754;
+  margin: 0;
+  text-align: center;
 }

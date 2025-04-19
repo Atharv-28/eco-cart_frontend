@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Footer.css';
-import { Typography, IconButton, Box } from '@mui/material';
+import { IconButton } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -34,53 +34,47 @@ const developers = [
 ];
 
 const Footer = () => {
-  const topRow = developers.slice(0, 2);
-  const bottomRow = developers.slice(2);
-
   return (
     <footer className="footer">
-      <div className="container py-3">
-        <div className="row justify-content-between align-items-center">
-          {/* Developer Names with Hover Icons in 2 rows */}
-          <div className="col-lg-6">
+      <div className="container py-2">
+        <div className="row align-items-center">
+          {/* Developer Section */}
+          <div className="col d-flex justify-content-start">
             <div className="developer-list">
-              {[topRow, bottomRow].map((group, i) => (
-                <div key={i} className="d-flex gap-4 mb-2 flex-wrap">
-                  {group.map((dev, idx) => (
-                    <div className="developer-item" key={idx}>
-                      <span>{dev.name}</span>
-                      <div className="developer-icons">
-                        <IconButton href={dev.instagram} target="_blank" size="small" className="icon-link">
-                          <InstagramIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton href={dev.linkedin} target="_blank" size="small" className="icon-link">
-                          <LinkedInIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton href={dev.github} target="_blank" size="small" className="icon-link">
-                          <GitHubIcon fontSize="small" />
-                        </IconButton>
-                      </div>
-                    </div>
-                  ))}
+              {developers.map((dev, idx) => (
+                <div className="developer-item text-center" key={idx}>
+                  <span className="d-block">{dev.name}</span>
+                  <div className="developer-icons d-flex justify-content-center gap-2 mt-1">
+                    <IconButton href={dev.instagram} target="_blank" size="small" className="icon-link">
+                      <InstagramIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton href={dev.linkedin} target="_blank" size="small" className="icon-link">
+                      <LinkedInIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton href={dev.github} target="_blank" size="small" className="icon-link">
+                      <GitHubIcon fontSize="small" />
+                    </IconButton>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Eco-Cart Info (now inline, no card) */}
-          <div className="col-lg-6 mt-4 mt-lg-0">
-            <div className="ecocart-info">
-              <Typography variant="h6" className="text-success fw-bold mb-2">Eco-Cart</Typography>
-              <Typography variant="body2" className="text-muted mb-2">
-                Sustainable choices, smarter living.<br />Eco-friendly products for a better tomorrow.
-              </Typography>
-              <Typography variant="body2" className="text-muted mb-1">📧 support@ecocart.com</Typography>
-              <Typography variant="body2" className="text-muted">📞 +91-9876543210</Typography>
+          {/* Branding Section */}
+          <div className="col-auto text-center">
+            <h4 className="eco-cart-branding">Eco-Cart</h4>
+          </div>
+
+          {/* Contact Us Section */}
+          <div className="col d-flex justify-content-end">
+            <div className="contact-us text-end">
+              <h5>Contact Us</h5>
+              <p>Email: <a href="mailto:support@eco-cart.com">support@eco-cart.com</a></p>
+              <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
             </div>
           </div>
         </div>
-
-        <div className="text-center py-2 border-top text-muted small mt-3">
+        <div className="text-center py-1 border-top text-muted small mt-2">
           © {new Date().getFullYear()} Eco-Cart. All rights reserved.
         </div>
       </div>
