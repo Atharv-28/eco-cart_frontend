@@ -113,7 +113,7 @@ const fetchAlternatives = async (analysis) => {
     const prodUrl = data.products[0].link;
 
     // Send prodUrl to the web scraping service
-    const scrapeResponse = await fetch('http://localhost:5000/scrape', {
+    const scrapeResponse = await fetch('https://eco-cart-backendpython.onrender.com/scrape', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: prodUrl }),
