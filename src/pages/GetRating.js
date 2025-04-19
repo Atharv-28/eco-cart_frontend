@@ -52,27 +52,37 @@ function GetRating() {
 
   const rateEco = async (title, brand, material) => {
     try {
-      const response = await axios.post("http://127.0.0.1:3000/gemini-test", {
-        title: title,
-        brand: brand,
-        material: material,
-      });
-      console.log("Rating API response:", response.data);
+        const response = await axios.post("http://127.0.0.1:3000/gemini-test", {
+            title: title,
+            brand: brand,
+            material: material,
+        });
+        console.log("Rating API response:", response.data);
 
-      const { rating, description } = response.data;
+        const { rating, description } = response.data;
 
-      const numericRating = rating.split(":")[1].trim(); // to Get 3 from "3/5"
-      console.log("Numeric rating:", numericRating);
+        // Check if rating exists and is valid
+        if (!rating || typeof rating !== "string" || !rating.includes("/")) {
+            console.error("Invalid or missing rating:", rating);
+            setError("Invalid rating format received from the API.");
+            return;
+        }
 
-      const parsedRating = parseInt(numericRating.split("/")[0], 10); // Convert to a number
-      console.log("Parsed rating:", parsedRating);
+        // Extract the numeric part of the rating (e.g., "3/5" from "rating: 3/5")
+        const numericRating = rating.split(":")[1].trim(); // Get "3/5"
+        console.log("Numeric rating:", numericRating);
 
-      setRating(parsedRating);
-      setDesc(description);
-      setError(null);
+        // Parse the rating to extract the numerator (e.g., "3" from "3/5")
+        const parsedRating = parseInt(numericRating.split("/")[0], 10); // Convert to a number
+        console.log("Parsed rating:", parsedRating);
+
+        // Store the parsed rating and description in state
+        setRating(parsedRating);
+        setDesc(description);
+        setError(null);
     } catch (err) {
-      console.error("Error fetching rating and review:", err);
-      setError("Failed to fetch rating and review. Please try again.");
+        console.error("Error fetching rating and review:", err);
+        setError("Failed to fetch rating and review. Please try again.");
     }
   };
 

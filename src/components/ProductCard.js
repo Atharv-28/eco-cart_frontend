@@ -1,4 +1,5 @@
 import { StarFill, Star, Link45deg } from 'react-bootstrap-icons'; 
+import badge from "../assets/eco-badge.png"; 
 
 export default function ProductCard(props) {
   const { id, name, link, img, rating, rating_description, material } = props;
@@ -19,6 +20,16 @@ export default function ProductCard(props) {
         <span className="badge bg-success position-absolute top-0 start-0 m-2">
           {id}
         </span>
+
+        {/* Image overlay for rating >= 3 */}
+        {rating >= 3 && (
+          <img
+            src={badge} // Replace with the path to your badge image
+            alt="Eco-Friendly Badge"
+            className="position-absolute top-0 end-0 m-2"
+            style={{ width: '50px', height: '50px' }} // Adjust size as needed
+          />
+        )}
       </div>
 
       <div className="card-body">
