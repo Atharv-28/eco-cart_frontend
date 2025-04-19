@@ -61,23 +61,12 @@ function GetRating() {
 
         const { rating, description } = response.data;
 
-        // Check if rating exists and is valid
-        if (!rating || typeof rating !== "string" || !rating.includes("/")) {
-            console.error("Invalid or missing rating:", rating);
-            setError("Invalid rating format received from the API.");
-            return;
-        }
+        const parsedRating = parseInt(rating);
 
-        // Extract the numeric part of the rating (e.g., "3/5" from "rating: 3/5")
-        const numericRating = rating.split(":")[1].trim(); // Get "3/5"
-        console.log("Numeric rating:", numericRating);
-
-        // Parse the rating to extract the numerator (e.g., "3" from "3/5")
-        const parsedRating = parseInt(numericRating.split("/")[0], 10); // Convert to a number
         console.log("Parsed rating:", parsedRating);
 
-        // Store the parsed rating and description in state
-        setRating(parsedRating);
+        // Store the rating and description in state
+        setRating(rating);
         setDesc(description);
         setError(null);
     } catch (err) {
