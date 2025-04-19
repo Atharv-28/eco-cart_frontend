@@ -100,6 +100,7 @@ html {
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: fit-content;
+    margin-bottom: 5vh;
 }
 
 .get-rating-button:hover {

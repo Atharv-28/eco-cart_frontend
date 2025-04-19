@@ -1,0 +1,48 @@
+.animated-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.animated-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 960px; /* Combined width of AnimatedCard and Chatbox */
+  height: 400px; /* Equal height for both components */
+  position: relative;
+  transition: transform 0.5s ease-in-out;
+}
+
+.animated-card.open .product-card {
+  transform: translateX(-5%); /* Shift to the left */
+}
+
+.animated-card.open .chatbox {
+  transform: translateX(0); /* Slide in from the right */
+}
+
+.product-card,
+.chatbox {
+  width: 50%; /* Equal width for both components */
+  height: 100%; /* Equal height for both components */
+  transition: transform 0.5s ease-in-out;
+}
+
+.product-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.chatbox {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%); /* Initially hidden */
+}
