@@ -40,7 +40,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container py-3">
-        <div className="row justify-content-between">
+        <div className="row justify-content-between align-items-center">
           {/* Developer Names with Hover Icons in 2 rows */}
           <div className="col-lg-6">
             <div className="developer-list">
