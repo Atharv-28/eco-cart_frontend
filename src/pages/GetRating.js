@@ -5,7 +5,7 @@ import axios from "axios";
 
 function GetRating() {
     const [rating, setRating] = useState(null);
-    const [review, setReview] = useState(null);
+    const [desc, setDesc] = useState(null);
     const [productLink, setProductLink] = useState("");
     const [productData, setProductData] = useState(null); // To store the response data
     const [error, setError] = useState(null); // To handle errors
@@ -41,9 +41,9 @@ function GetRating() {
                 material: material,
             });
             console.log("Rating API response:", response.data);
-            const { rating, review } = response.data;
+            const { rating , description } = response.data;
             setRating(rating);
-            setReview(review);
+            setDesc(description);
             setError(null);
         } catch (err) {
             console.error("Error fetching rating and review:", err);
@@ -87,7 +87,7 @@ function GetRating() {
                     <div className="rating-result">
                         <h2>Product Rating</h2>
                         <p>{rating}</p>
-                        <p><strong>Review:</strong> {review}</p>
+                        <p><strong>Review:</strong> {desc}</p>
                     </div>
                     </>
                     
