@@ -18,101 +18,130 @@ function GetRating() {
   const [loading, setLoading] = useState(false);
   const [alternativeProducts, setAlternativeProducts] = useState([]);
 
-  const scrape = async (url) => {
+  const scrape = async (url, isAlternative = false) => {
     try {
-      setLoading(true);
       const response = await axios.post("http://127.0.0.1:5000/scrape", {
-        url: productLink,
+        url: url,
       });
 
-      console.log("Full response data:", response.data);
-
       const { image_url, material, title, brand } = response.data;
-      setProductData({ image_url, material, title, brand });
-      console.log(image_url);
-      
-      setImageUrl(image_url);
-      console.log(image_url);
-      setMaterial(material);
-      setTitle(title);
-      setBrand(brand);
-      setError(null);
-      console.log("Scraped data:", { image_url, material, title, brand });
 
       if (!material || !title) {
-        setError(
-          "Web Scrapper failed to fetch product data. Please try again."
-        );
+        if (!isAlternative) {
+          setError(
+            "Web Scrapper failed to fetch product data. Please try again."
+          );
+        }
         return;
       }
 
-      // Pass image_url directly to rateEco
-      await rateEco(title, brand, material, image_url);
+      if (isAlternative) {
+        await rateEco(title, brand, material, image_url, url, true);
+      } else {
+        setProductData({ image_url, material, title, brand });
+        setImageUrl(image_url);
+        setMaterial(material);
+        setTitle(title);
+        setBrand(brand);
+        setError(null);
+        setProductLink(url);
+
+        await rateEco(title, brand, material, image_url, url);
+      }
     } catch (err) {
       console.error("Error fetching product data:", err);
-      setError("Failed to fetch product data. Please try again.");
-    } finally {
-      setLoading(false);
+      if (!isAlternative) {
+        setError("Failed to fetch product data. Please try again.");
+      }
+    }
+  };
+
+  const rateEco = async (
+    title,
+    brand,
+    material,
+    image_url,
+    link,
+    isAlternative = false
+  ) => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:3000/gemini-getRating",
+        {
+          title,
+          brand,
+          material,
+        }
+      );
+
+      const { rating, description, category } = response.data;
+      const parsedRating = parseInt(rating);
+
+      if (isAlternative) {
+        setAlternativeProducts((prev) => [
+          ...prev,
+          {
+            img: image_url,
+            name: title,
+            material,
+            rating,
+            rating_description: description,
+            link,
+            brand,
+          },
+        ]);
+      } else {
+        setRating(rating);
+        setDesc(description);
+        setError(null);
+
+        if (parsedRating >= 3) {
+          const productDetails = {
+            id: category,
+            name: title,
+            link,
+            img: image_url,
+            rating,
+            description,
+            material,
+          };
+          await dynamicUpload(productDetails);
+        } else {
+          suggestAlternative(category);
+        }
+      }
+    } catch (err) {
+      console.error("Error fetching rating and review:", err);
+      if (!isAlternative) {
+        setError("Failed to fetch rating and review. Please try again.");
+      }
     }
   };
 
   const suggestAlternative = async (category) => {
     try {
-      // Validate the category
       if (!category) {
-        console.error("Invalid category:", category);
         setError("Invalid category for suggesting alternatives.");
         return;
       }
 
-      console.log("Category sent to suggestAlternative:", category);
+      setAlternativeProducts([]);
+      setLoading(true);
 
-      const response = await axios.post("http://localhost:3000/search-product", {
-        query: category,
-      });
-
-      console.log("Alternative API response:", response.data);
-
-      const alternatives = response.data; // Array of product links
-      const alternativeProductsData = [];
-
-      for (const link of alternatives) {
-        try {
-          // Scrape and rate each alternative product
-          const scrapeResponse = await axios.post("http://127.0.0.1:5000/scrape", {
-            url: link,
-          });
-
-          const { image_url, material, title, brand } = scrapeResponse.data;
-
-          const rateResponse = await axios.post(
-            "http://127.0.0.1:3000/gemini-getRating",
-            {
-              title: title,
-              brand: brand,
-              material: material,
-            }
-          );
-
-          const { rating, description, category } = rateResponse.data;
-
-          // Add the alternative product to the list
-          alternativeProductsData.push({
-            id: category,
-            name: title,
-            link: link,
-            img: image_url,
-            rating: rating,
-            description: description,
-            material: material,
-          });
-        } catch (err) {
-          console.error("Error processing alternative product:", err);
+      const response = await axios.post(
+        "http://localhost:3000/search-product",
+        {
+          query: category,
         }
-      }
+      );
 
-      // Update state with alternative products
-      setAlternativeProducts(alternativeProductsData);
+      const alternatives = response.data.products || [];
+
+      const top3Links = alternatives.slice(0, 3).map((product) => product.link);
+
+      for (const link of top3Links) {
+        await scrape(link, true);
+      }
     } catch (err) {
       console.error("Error fetching alternative products:", err);
       setError("Failed to fetch alternative products. Please try again.");
@@ -121,53 +150,8 @@ function GetRating() {
     }
   };
 
-  const rateEco = async (title, brand, material, image_url) => {
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:3000/gemini-getRating",
-        {
-          title: title,
-          brand: brand,
-          material: material,
-        }
-      );
-      console.log("Rating API response:", response.data);
-
-      const { rating, description, category } = response.data;
-
-      const parsedRating = parseInt(rating);
-
-      console.log("Parsed rating:", parsedRating);
-
-      setRating(rating);
-      setDesc(description);
-      setError(null);
-
-      // Only good eco products uploading
-      if (rating >= 3) {
-        const productDetails = {
-          id: category,
-          name: title,
-          link: productLink,
-          img: image_url,
-          rating: rating,
-          description: description,
-          material: material,
-        };
-        console.log("Uploading product to Firestore:", productDetails);
-        await dynamicUpload(productDetails);
-      }
-      if (rating < 3) {
-        console.log("Rating is less than 3, suggesting alternatives.");
-        suggestAlternative(category);
-      }
-    } catch (err) {
-      console.error("Error fetching rating and review:", err);
-      setError("Failed to fetch rating and review. Please try again.");
-    }
-  };
-
   const handleRatingFetch = async () => {
+    setAlternativeProducts([]);
     scrape(productLink);
   };
 
@@ -205,20 +189,20 @@ function GetRating() {
           />
         )}
 
-        {/* Render Alternative Products */}
         {alternativeProducts.length > 0 && (
-          <div className="alternative-products">
+          <div className="alternative-products-container">
             <h3>Alternative Products</h3>
-            <div className="row g-4">
-              {alternativeProducts.map((product) => (
-                <div key={product.link} className="col-12 col-md-6 col-lg-4">
+            <div className="alternative-products">
+              {alternativeProducts.map((alt, index) => (
+                <div key={index} className="alternative-product-card">
                   <ProductCard
-                    img={product.img}
-                    name={product.name}
-                    material={product.material}
-                    link={product.link}
-                    rating={product.rating}
-                    rating_description={product.description}
+                    img={alt.img}
+                    name={alt.name}
+                    material={alt.material}
+                    link={alt.link}
+                    rating={alt.rating}
+                    rating_description={alt.rating_description}
+                    brand={alt.brand}
                   />
                 </div>
               ))}
