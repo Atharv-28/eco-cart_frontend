@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import '../styles/getRating.css';
 import axios from "axios";
+import ProductCard from "../components/ProductCard";
 
 function GetRating() {
     const [rating, setRating] = useState(null);
     const [desc, setDesc] = useState(null);
     const [productLink, setProductLink] = useState("");
-    const [productData, setProductData] = useState(null); // To store the response data
-    const [error, setError] = useState(null); // To handle errors
-    const [loading, setLoading] = useState(false); // To manage the loader state
+    const [productData, setProductData] = useState(null); 
+    const [error, setError] = useState(null); 
+    const [brand, setBrand] = useState(null);
+    const [material, setMaterial] = useState(null);
+    const [title, setTitle] = useState(null);
+    const [image_url, setImageUrl] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const scrape = async (url) => {
         try {
-            setLoading(true); // Start the loader
+            setLoading(true); 
             const response = await axios.post("http://127.0.0.1:5000/scrape", {
                 url: productLink,
             });
@@ -22,14 +27,25 @@ function GetRating() {
 
             const { image_url, material, title, brand } = response.data;
             setProductData({ image_url, material, title, brand });
+            setImageUrl(image_url);
+            setMaterial(material);
+            setTitle(title);
+            setBrand(brand);
             setError(null);
+            console.log("Scraped data:", { image_url, material, title, brand });
 
-            await rateEco(title, brand, material); // Wait for rateEco to complete
+            if (!material || !title) {
+                setError("Web Scrapper failed to fetch product data. Please try again.");
+                return;
+            }
+            
+
+            await rateEco(title, brand, material); 
         } catch (err) {
             console.error("Error fetching product data:", err);
             setError("Failed to fetch product data. Please try again.");
         } finally {
-            setLoading(false); // Stop the loader
+            setLoading(false); 
         }
     };
 
@@ -41,8 +57,20 @@ function GetRating() {
                 material: material,
             });
             console.log("Rating API response:", response.data);
-            const { rating , description } = response.data;
-            setRating(rating);
+
+            // Extract the rating and description from the response
+            const { rating, description } = response.data;
+
+            // Extract the numeric part of the rating (e.g., "3/5" from "rating: 3/5")
+            const numericRating = rating.split(':')[1].trim(); // Get "3/5"
+            console.log("Numeric rating:", numericRating);
+
+            // Parse the rating to extract the numerator (e.g., "3" from "3/5")
+            const parsedRating = parseInt(numericRating.split('/')[0], 10); // Convert to a number
+            console.log("Parsed rating:", parsedRating);
+
+            // Store the parsed rating and description in state
+            setRating(parsedRating);
             setDesc(description);
             setError(null);
         } catch (err) {
@@ -71,12 +99,21 @@ function GetRating() {
                     </button>
                 </div>
 
-                {loading && <p className="loading-message">Loading...</p>} {/* Loader */}
+                {loading && <p className="loading-message">Loading...</p>} 
 
                 {error && <p className="error-message">{error}</p>}
 
                 {productData && (
-                    <>
+                    <ProductCard
+                        img={image_url}
+                        name={title}
+                        material={material}
+                        link={productLink}
+                        rating={rating}
+                        rating_description={desc}
+                        brand={brand}
+                    />
+                    /*<>
                     <div className="product-details">
                         <h2>Product Details</h2>
                         <img src={productData.image_url} alt="failed to load" className="product-image" />
@@ -89,7 +126,7 @@ function GetRating() {
                         <p>{rating}</p>
                         <p><strong>Review:</strong> {desc}</p>
                     </div>
-                    </>
+                    </>*/
                     
                 )}
 

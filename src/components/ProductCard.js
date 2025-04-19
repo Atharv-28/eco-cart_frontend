@@ -1,9 +1,8 @@
-import { Star, Link45deg } from 'react-bootstrap-icons'; // Using bootstrap icons instead
+import { StarFill, Star, Link45deg } from 'react-bootstrap-icons'; 
 
 export default function ProductCard(props) {
   const { id, name, link, img, rating, rating_description, material } = props;
 
-  // Convert rating to stars
   const ratingStars = Array.from({ length: 5 }, (_, i) => i < Math.round(rating));
 
   return (
@@ -53,14 +52,22 @@ export default function ProductCard(props) {
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex me-2">
             {ratingStars.map((filled, index) => (
-              <Star
-                key={index}
-                className={filled ? "text-warning" : "text-secondary"}
-                style={{ marginRight: '2px' }}
-              />
+              filled ? (
+                <StarFill
+                  key={index}
+                  className="text-success" // for green color
+                  style={{ marginRight: '2px' }}
+                />
+              ) : (
+                <Star
+                  key={index}
+                  className="text-success" 
+                  style={{ marginRight: '2px' }}
+                />
+              )
             ))}
           </div>
-          <span className="text-muted">({rating}/5)</span>
+          <span className="text-muted">({rating})</span>
         </div>
         
         <p className="card-text text-muted small fst-italic" style={{
