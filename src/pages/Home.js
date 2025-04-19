@@ -7,14 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import icons from react-icons
 
-// ... (keep existing filterOptions array and imports)
-const filterOptions = [
-  { value: 'all', label: 'All' },
-  { value: 'top-rated', label: 'Top Rated' },
-  { value: 'plastic-free', label: 'Plastic Free' },
-  { value: 'compostable', label: 'Compostable' }
-];
-
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -116,15 +108,6 @@ export default function HomePage() {
       {/* Search and Filter Bar */}
       <div className="search-filter-bar d-flex align-items-center">
         <SearchBar placeholder="Search for a product..." onSearch={setSearchQuery} />
-        <select
-          className="form-select filter-select ms-3"
-          value={selectedFilter}
-          onChange={e => setSelectedFilter(e.target.value)}
-        >
-          {filterOptions.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
       </div>
       {/* Modified products container */}
       <div className="products-container mt-5">
