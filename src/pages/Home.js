@@ -1,13 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../components/util.js/config'; // Import Firestore instance
 import SearchBar from '../components/SearchBar';
 import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
-
-// const categoriesList = [
-//   'Toothbrush', 'Shampoo', 'Notebook', 'T-Shirt', 'Shoes',
-//   'Coffee Mug', 'Phone Case', 'Water Bottle'
-// ];
 
 const filterOptions = [
   { value: 'all', label: 'All' },
@@ -16,36 +13,37 @@ const filterOptions = [
   { value: 'compostable', label: 'Compostable' }
 ];
 
-// Example product data; replace with your API data
-const initialProducts = [
-  {
-    id: '101',
-    name: 'Bamboo Toothbrush',
-    link: '#',
-    img: 'https://via.placeholder.com/300x200',
-    rating: 4.5,
-    rating_description: 'Eco-friendly bamboo handle.',
-    material: 'Bamboo'
-  },
-  {
-    id: '102',
-    name: 'Compostable Phone Case',
-    link: '#',
-    img: 'https://via.placeholder.com/300x200',
-    rating: 4.2,
-    rating_description: 'Made from plant-based materials.',
-    material: 'Compostable Bioplastic'
-  },
-  // ...more products
-];
-
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [products, setProducts] = useState([]); // State to store products
+  const [loading, setLoading] = useState(true); // State to manage loading
 
+  // Fetch products from Firestore
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsCollection = collection(db, 'products'); // Firestore collection name
+        const productSnapshot = await getDocs(productsCollection);
+        const productList = productSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setProducts(productList);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Filter products based on search query, category, and filter
   const filteredProducts = useMemo(() => {
-    return initialProducts.filter(prod => {
+    return products.filter(prod => {
       const matchesSearch = prod.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory
         ? prod.name.toLowerCase().includes(selectedCategory.toLowerCase())
@@ -57,7 +55,7 @@ export default function HomePage() {
         (selectedFilter === 'compostable' && prod.material.toLowerCase().includes('compostable'));
       return matchesSearch && matchesCategory && matchesFilter;
     });
-  }, [searchQuery, selectedCategory, selectedFilter]);
+  }, [products, searchQuery, selectedCategory, selectedFilter]);
 
   return (
     <div className="homepage-container">
@@ -75,22 +73,11 @@ export default function HomePage() {
         </select>
       </div>
 
-      {/* Category Chips */}
-      {/*<div className="categories-container mt-4">
-        {categoriesList.map(cat => (
-          <button
-            key={cat}
-            className={`category-item btn ${selectedCategory === cat ? 'btn-success selected' : 'btn-outline-success'}`}
-            onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>*/}
-
       {/* Product Results */}
       <div className="products-container mt-5">
-        {filteredProducts.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-muted">Loading products...</p>
+        ) : filteredProducts.length > 0 ? (
           <div className="row g-4">
             {filteredProducts.map(prod => (
               <div key={prod.id} className="col-12 col-md-6 col-lg-4">
