@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/home.css';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import icons from react-icons
+import Chatbot from '../components/Chatbot';
 
 // ... (keep existing filterOptions array and imports)
 const filterOptions = [
@@ -152,6 +153,7 @@ export default function HomePage() {
         )}
       </div>
       </div>
+      <Chatbot />
     </div>
   );
 }
