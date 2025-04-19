@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
 import './Chatbot.css'; 
+import axios from 'axios';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);

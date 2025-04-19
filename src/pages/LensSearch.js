@@ -72,7 +72,7 @@ export default function LensSearchPage() {
     setLoading(true);
     setError('');
     try {
-      const response = await fetchWithRetry('http://127.0.0.1:3000/gemini-ecoLens', {
+      const response = await fetchWithRetry('https://eco-cart-backendnode.onrender.com/gemini-ecoLens', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageUrl: selectedFile }),
@@ -102,7 +102,7 @@ export default function LensSearchPage() {
 
 const fetchAlternatives = async (analysis) => {
   try {
-    const response = await fetch('http://localhost:3000/search-product', {
+    const response = await fetch('https://eco-cart-backendnode.onrender.com/search-product', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: analysis.product }),
@@ -127,7 +127,7 @@ const fetchAlternatives = async (analysis) => {
     console.log('Scraped data:', scrapedData);
 
     // Send scraped data to gemini-getRating
-    const ratingResponse = await fetch('http://localhost:3000/gemini-getRating', {
+    const ratingResponse = await fetch('https://eco-cart-backendnode.onrender.com/gemini-getRating', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(scrapedData),

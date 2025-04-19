@@ -67,7 +67,7 @@ function GetRating() {
   ) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:3000/gemini-getRating",
+        "https://eco-cart-backendnode.onrender.com/gemini-getRating",
         {
           title,
           brand,
@@ -130,7 +130,7 @@ function GetRating() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:3000/search-product",
+        "https://eco-cart-backendnode.onrender.com/search-product",
         {
           query: category,
         }
