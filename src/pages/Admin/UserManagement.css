@@ -1,0 +1,96 @@
+.user-management {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-top: 2rem;
+  }
+  
+  .users-table {
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
+  }
+  
+  .users-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .users-table th {
+    background: #f8f9fa;
+    padding: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+  }
+  
+  .users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f8f9fa;
+  }
+  
+  .password-field {
+    position: relative;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .password-field:hover {
+    background: #e9ecef;
+  }
+  
+  .password-field:hover .password-hover {
+    opacity: 1;
+  }
+  
+  .password-hover {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2ecc71;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  
+  .password-hover::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: #2ecc71 transparent transparent;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .form-control {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.75rem;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+  }

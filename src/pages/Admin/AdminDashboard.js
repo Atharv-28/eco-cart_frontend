@@ -51,7 +51,7 @@ export default function AdminDashboard() {
             <Button variant="link" className="nav-link active">
               <List size={20} className="me-2" /> Dashboard
             </Button>
-            <Button variant="link" className="nav-link">
+            <Button variant="link" className="nav-link" onClick={() => navigate('/UserManagement')}>
               <Person size={20} className="me-2" /> User Management
             </Button>
             <div className="mt-auto">
