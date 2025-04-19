@@ -30,7 +30,7 @@ export default function ProductCard(props) {
         <img
           src={img || "/placeholder.svg"}
           alt={name}
-          className="card-img-top h-100 object-fit-cover rounded"
+          className="card-img-top h-100 object-fit-contain rounded"
           style={{
             width: '100%',
             height: '100%',
