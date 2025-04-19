@@ -7,7 +7,6 @@ export default function ProductCard(props) {
 
   return (
     <div className="card shadow-sm h-100" style={{ maxWidth: '360px', transition: 'all 0.3s' }}>
-      {/* Product Image */}
       <div className="position-relative overflow-hidden" style={{ height: '192px' }}>
         <img
           src={img || "/placeholder.svg"}
@@ -22,7 +21,6 @@ export default function ProductCard(props) {
         </span>
       </div>
 
-      {/* Product Details */}
       <div className="card-body">
         <div className="d-flex justify-content-between align-items-start mb-2">
           <h5 className="card-title mb-0" style={{ 
@@ -43,12 +41,10 @@ export default function ProductCard(props) {
           </a>
         </div>
 
-        {/* Material */}
         <p className="card-text text-muted mb-3">
           <strong>Material:</strong> {material}
         </p>
 
-        {/* Rating */}
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex me-2">
             {ratingStars.map((filled, index) => (
