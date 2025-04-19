@@ -6,36 +6,105 @@ import ProductCard from '../components/ProductCard';
 
 export default function LensSearchPage() {
   const [isDragging, setIsDragging] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null); // Stores the Cloudinary URL
+  const [filePreview, setFilePreview] = useState(null); // Stores the local file preview
   const [alternatives, setAlternatives] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showMore, setShowMore] = useState(false);
 
+  // Upload file to Cloudinary
+  const handleFileSelect = async (e) => {
+    const media = e.target.files[0];
+    if (media && media.type.startsWith('image/')) {
+      setFilePreview(URL.createObjectURL(media)); // Set the local file preview
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('file', media);
+      formData.append('upload_preset', 'ck4cetvf'); // Replace with your Cloudinary upload preset
+
+      try {
+        const res = await fetch(
+          'https://api.cloudinary.com/v1_1/dhnplptdz/image/upload', // Replace with your Cloudinary cloud name
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error('Failed to upload image to Cloudinary');
+        }
+
+        const data = await res.json();
+        setSelectedFile(data.secure_url); // Store the Cloudinary URL
+        setLoading(false);
+        console.log('Image uploaded successfully:', data.secure_url);
+        
+      } catch (error) {
+        console.error('Error uploading media:', error);
+        setError('Failed to upload image. Please try again.');
+        setLoading(false);
+      }
+    }
+  };
+
+  const fetchWithRetry = async (url, options, retries = 3) => {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const response = await fetch(url, options);
+            if (response.ok) return response;
+            throw new Error(`Attempt ${i+1} failed`);
+        } catch (error) {
+            if (i === retries - 1) throw error;
+            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        }
+    }
+};
   // Simulated API call to fetch alternatives
   const fetchImageDetails = async () => {
     if (!selectedFile) return;
-    
+
     setLoading(true);
     setError('');
     try {
-      // Simulated API response
-      const mockAlternatives = [
-        { id: 1, name: 'Bamboo Toothbrush', rating: 4.5, ecoScore: 9 },
-        { id: 2, name: 'Reusable Silicone Bags', rating: 4.8, ecoScore: 9.5 },
-        { id: 3, name: 'Organic Cotton Tote', rating: 4.7, ecoScore: 8.8 },
-        { id: 4, name: 'Glass Food Containers', rating: 4.6, ecoScore: 9.2 },
-      ];
+      const response = await fetchWithRetry('http://127.0.0.1:3000/gemini-ecoLens', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl: selectedFile }),
+    });
 
-      setTimeout(() => {
-        setAlternatives(mockAlternatives);
-        setLoading(false);
-      }, 1500);
+        if (!response.ok) throw new Error('Analysis failed');
+        
+        const analysis = await response.json();
+        
+        // Use the analysis results to find alternatives
+        const alternatives = await fetchAlternatives(analysis);
+        setAlternatives(alternatives);
+        
     } catch (err) {
-      setError('Failed to fetch alternatives');
-      setLoading(false);
+        console.error('Error:', err);
+        setError(err.message || 'Analysis failed');
+    } finally {
+        setLoading(false);
     }
-  };
+};
+
+const fetchAlternatives = async (analysis) => {
+  try {
+      const response = await fetch('/api/get-eco-alternatives', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(analysis),
+      });
+      return await response.json();
+  } catch (error) {
+      console.error('Alternatives fetch error:', error);
+      return [];
+  }
+};
+
   const handleDragEnter = useCallback((e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -51,18 +120,10 @@ export default function LensSearchPage() {
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file);
+      setFilePreview(URL.createObjectURL(file)); // Set the local file preview
+      handleFileSelect({ target: { files: [file] } }); // Trigger file upload
     }
   }, []);
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file);
-    }
-  };
-
-  
 
   return (
     <div className="lens-container">
@@ -83,9 +144,9 @@ export default function LensSearchPage() {
           onDrop={handleDrop}
         >
           <div className="upload-content">
-            {selectedFile ? (
+            {filePreview ? (
               <img
-                src={URL.createObjectURL(selectedFile)}
+                src={filePreview}
                 alt="Preview"
                 className="image-preview"
               />
@@ -109,11 +170,10 @@ export default function LensSearchPage() {
           </div>
         </div>
 
-        {/* Button below container */}
         {selectedFile && (
           <div className="action-container">
-            <button 
-              className="find-button" 
+            <button
+              className="find-button"
               onClick={fetchImageDetails}
               disabled={loading}
             >
@@ -128,34 +188,36 @@ export default function LensSearchPage() {
           </div>
         )}
 
-{error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-{alternatives.length > 0 && (
-  <div className="alternatives-section">
-    <h3><span className="eco-badge">♻️</span> Eco-Friendly Alternatives</h3>
-    
-    <div className="alternatives-grid">
-      {alternatives
-        .slice(0, showMore ? alternatives.length : 3)
-        .map(product => (
-          <ProductCard 
-            key={product.id}
-            {...product}
-            ecoScore={product.ecoScore}
-          />
-        ))}
-    </div>
+        {alternatives.length > 0 && (
+          <div className="alternatives-section">
+            <h3>
+              <span className="eco-badge">♻️</span> Eco-Friendly Alternatives
+            </h3>
 
-    {alternatives.length > 3 && !showMore && (
-      <button 
-        className="show-more-btn"
-        onClick={() => setShowMore(true)}
-      >
-        Show More Alternatives <FiChevronDown />
-      </button>
-    )}
-  </div>
-)}
+            <div className="alternatives-grid">
+              {alternatives
+                .slice(0, showMore ? alternatives.length : 3)
+                .map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    {...product}
+                    ecoScore={product.ecoScore}
+                  />
+                ))}
+            </div>
+
+            {alternatives.length > 3 && !showMore && (
+              <button
+                className="show-more-btn"
+                onClick={() => setShowMore(true)}
+              >
+                Show More Alternatives <FiChevronDown />
+              </button>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );

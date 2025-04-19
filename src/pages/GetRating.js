@@ -134,6 +134,8 @@ function GetRating() {
           query: category,
         }
       );
+      console.log("Response from alternative products:", response.data);
+      
 
       const alternatives = response.data.products || [];
 
