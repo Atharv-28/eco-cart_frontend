@@ -16,6 +16,7 @@ function GetRating() {
   const [title, setTitle] = useState(null);
   const [image_url, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [alternativeProducts, setAlternativeProducts] = useState([]);
 
   const scrape = async (url) => {
     try {
@@ -72,8 +73,46 @@ function GetRating() {
 
       console.log("Alternative API response:", response.data);
 
-      const alternatives = response.data;
-      // Handle alternatives (e.g., display them to the user)
+      const alternatives = response.data; // Array of product links
+      const alternativeProductsData = [];
+
+      for (const link of alternatives) {
+        try {
+          // Scrape and rate each alternative product
+          const scrapeResponse = await axios.post("http://127.0.0.1:5000/scrape", {
+            url: link,
+          });
+
+          const { image_url, material, title, brand } = scrapeResponse.data;
+
+          const rateResponse = await axios.post(
+            "http://127.0.0.1:3000/gemini-getRating",
+            {
+              title: title,
+              brand: brand,
+              material: material,
+            }
+          );
+
+          const { rating, description, category } = rateResponse.data;
+
+          // Add the alternative product to the list
+          alternativeProductsData.push({
+            id: category,
+            name: title,
+            link: link,
+            img: image_url,
+            rating: rating,
+            description: description,
+            material: material,
+          });
+        } catch (err) {
+          console.error("Error processing alternative product:", err);
+        }
+      }
+
+      // Update state with alternative products
+      setAlternativeProducts(alternativeProductsData);
     } catch (err) {
       console.error("Error fetching alternative products:", err);
       setError("Failed to fetch alternative products. Please try again.");
@@ -164,6 +203,27 @@ function GetRating() {
             rating_description={desc}
             brand={brand}
           />
+        )}
+
+        {/* Render Alternative Products */}
+        {alternativeProducts.length > 0 && (
+          <div className="alternative-products">
+            <h3>Alternative Products</h3>
+            <div className="row g-4">
+              {alternativeProducts.map((product) => (
+                <div key={product.link} className="col-12 col-md-6 col-lg-4">
+                  <ProductCard
+                    img={product.img}
+                    name={product.name}
+                    material={product.material}
+                    link={product.link}
+                    rating={product.rating}
+                    rating_description={product.description}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
         <p className="note">
