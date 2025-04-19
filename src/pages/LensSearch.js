@@ -2,7 +2,10 @@ import { useState, useCallback } from 'react';
 import { FiUpload, FiCamera, FiSearch, FiChevronDown } from 'react-icons/fi';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import './LensSearch.css';
+import axios from "axios";
 import ProductCard from '../components/ProductCard';
+import AnimatedCard from '../components/AnimatedCard';
+import { useEffect } from 'react';
 
 export default function LensSearchPage() {
   const [isDragging, setIsDragging] = useState(false);
@@ -79,9 +82,15 @@ export default function LensSearchPage() {
         
         const analysis = await response.json();
         
-        // Use the analysis results to find alternatives
-        const alternatives = await fetchAlternatives(analysis);
-        setAlternatives(alternatives);
+        // Log the response from the backend
+        console.log('Backend response:', analysis.product);
+
+        // Use the analysis results to find alternatives and get the rating data
+        const ratingData = await fetchAlternatives(analysis);
+
+        if (ratingData) {
+          setAlternatives(ratingData); // Save the rating data in state
+        }
         
     } catch (err) {
         console.error('Error:', err);
@@ -93,15 +102,49 @@ export default function LensSearchPage() {
 
 const fetchAlternatives = async (analysis) => {
   try {
-      const response = await fetch('/api/get-eco-alternatives', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(analysis),
-      });
-      return await response.json();
+    const response = await fetch('http://localhost:3000/search-product', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: analysis.product }),
+    });
+    const data = await response.json();
+    console.log('Alternatives response:', data.products[0].link);
+
+    const prodUrl = data.products[0].link;
+
+    // Send prodUrl to the web scraping service
+    const scrapeResponse = await fetch('http://localhost:5000/scrape', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: prodUrl }),
+    });
+
+    if (!scrapeResponse.ok) {
+      throw new Error('Failed to scrape product data');
+    }
+
+    const scrapedData = await scrapeResponse.json();
+    console.log('Scraped data:', scrapedData);
+
+    // Send scraped data to gemini-getRating
+    const ratingResponse = await fetch('http://localhost:3000/gemini-getRating', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(scrapedData),
+    });
+
+    if (!ratingResponse.ok) {
+      throw new Error('Failed to get rating from gemini-getRating');
+    }
+
+    const ratingData = await ratingResponse.json();
+    console.log('Rating data:', ratingData);
+
+    // Return the rating data to be passed to AnimatedCard
+    return ratingData;
   } catch (error) {
-      console.error('Alternatives fetch error:', error);
-      return [];
+    console.error('Error in fetchAlternatives:', error);
+    return null;
   }
 };
 
@@ -181,7 +224,7 @@ const fetchAlternatives = async (analysis) => {
                 <div className="spinner"></div>
               ) : (
                 <>
-                  <FiSearch /> Analyze Sustainability
+                  <FiSearch /> Find Best Alternatives / Similar Product
                 </>
               )}
             </button>
@@ -217,6 +260,18 @@ const fetchAlternatives = async (analysis) => {
               </button>
             )}
           </div>
+        )}
+
+        {alternatives && (
+          <AnimatedCard
+            img={alternatives.img}
+            name={alternatives.name}
+            brand={alternatives.brand}
+            material={alternatives.material}
+            link={alternatives.link}
+            rating={alternatives.rating}
+            rating_description={alternatives.rating_description}
+          />
         )}
       </main>
     </div>

@@ -12,6 +12,8 @@ export default function AnimatedCard(props) {
   const [showChatbox, setShowChatbox] = useState(false);
 
   useEffect(() => {
+    if (typeof name !== 'string' || typeof rating !== 'number') return;
+  
     // Animate the name
     let nameIndex = 0;
     const nameInterval = setInterval(() => {
@@ -22,7 +24,7 @@ export default function AnimatedCard(props) {
         clearInterval(nameInterval);
       }
     }, 50); // Typing speed for the name
-
+  
     // Animate the stars
     let starIndex = 0;
     const starInterval = setInterval(() => {
@@ -33,18 +35,19 @@ export default function AnimatedCard(props) {
         clearInterval(starInterval);
       }
     }, 500); // 0.5s delay for each star
-
+  
     // Show chatbox after animations
     const chatboxTimeout = setTimeout(() => {
       setShowChatbox(true);
     }, 3000); // Wait for animations to complete
-
+  
     return () => {
       clearInterval(nameInterval);
       clearInterval(starInterval);
       clearTimeout(chatboxTimeout);
     };
   }, [name, rating]);
+  
 
   return (
     <div className="animated-card-container">
@@ -162,8 +165,6 @@ const TypingEffect = ({ text = '' }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
-    if (typeof text !== 'string') return;
-
     let index = 0;
     const interval = setInterval(() => {
       if (index < text.length) {
@@ -173,9 +174,10 @@ const TypingEffect = ({ text = '' }) => {
         clearInterval(interval);
       }
     }, 50);
-
+  
     return () => clearInterval(interval);
   }, [text]);
+  
 
   return (
     <p
