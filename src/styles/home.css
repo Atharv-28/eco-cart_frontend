@@ -2,6 +2,7 @@
   max-width: 1200px;
   margin: auto;
   padding: 2rem 1rem;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
 }
 
 .search-filter-bar .search-bar-container {

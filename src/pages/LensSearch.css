@@ -11,6 +11,7 @@
   margin: 0 auto;
   padding: 2rem;
   min-height: 100vh;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
 }
 
 .logo-icon {
