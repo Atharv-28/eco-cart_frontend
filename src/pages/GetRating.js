@@ -28,7 +28,10 @@ function GetRating() {
 
       const { image_url, material, title, brand } = response.data;
       setProductData({ image_url, material, title, brand });
+      console.log(image_url);
+      
       setImageUrl(image_url);
+      console.log(image_url);
       setMaterial(material);
       setTitle(title);
       setBrand(brand);
@@ -42,7 +45,8 @@ function GetRating() {
         return;
       }
 
-      await rateEco(title, brand, material);
+      // Pass image_url directly to rateEco
+      await rateEco(title, brand, material, image_url);
     } catch (err) {
       console.error("Error fetching product data:", err);
       setError("Failed to fetch product data. Please try again.");
@@ -51,7 +55,34 @@ function GetRating() {
     }
   };
 
-  const rateEco = async (title, brand, material) => {
+  const suggestAlternative = async (category) => {
+    try {
+      // Validate the category
+      if (!category) {
+        console.error("Invalid category:", category);
+        setError("Invalid category for suggesting alternatives.");
+        return;
+      }
+
+      console.log("Category sent to suggestAlternative:", category);
+
+      const response = await axios.post("http://127.0.0.1:3000/search-product", {
+        category: category,
+      });
+
+      console.log("Alternative API response:", response.data);
+
+      const alternatives = response.data.alternatives;
+      // Handle alternatives (e.g., display them to the user)
+    } catch (err) {
+      console.error("Error fetching alternative products:", err);
+      setError("Failed to fetch alternative products. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const rateEco = async (title, brand, material, image_url) => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:3000/gemini-getRating",
@@ -86,6 +117,10 @@ function GetRating() {
         };
         console.log("Uploading product to Firestore:", productDetails);
         await dynamicUpload(productDetails);
+      }
+      if (rating < 3) {
+        console.log("Rating is less than 3, suggesting alternatives.");
+        suggestAlternative(category);
       }
     } catch (err) {
       console.error("Error fetching rating and review:", err);
