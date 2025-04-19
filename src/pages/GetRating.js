@@ -66,13 +66,13 @@ function GetRating() {
 
       console.log("Category sent to suggestAlternative:", category);
 
-      const response = await axios.post("http://127.0.0.1:3000/search-product", {
-        category: category,
+      const response = await axios.post("http://localhost:3000/search-product", {
+        query: category,
       });
 
       console.log("Alternative API response:", response.data);
 
-      const alternatives = response.data.alternatives;
+      const alternatives = response.data;
       // Handle alternatives (e.g., display them to the user)
     } catch (err) {
       console.error("Error fetching alternative products:", err);
