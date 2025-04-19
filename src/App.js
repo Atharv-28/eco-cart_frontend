@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AddProduct from './pages/Admin/AddProduct'; // Import AddProduct component
 import UserManagement from './pages/Admin/UserManagement'; // Import UserManagement component
+import Chatbot from './components/Chatbot';
 function App() {
   return (
     <Router>
@@ -20,7 +21,7 @@ function App() {
         <Route path="/AdminDashboard" element={<AdminDashboard />} />
         <Route path="/AddProduct" element={<AddProduct />} /> 
         <Route path="/UserManagement" element={<UserManagement />} /> 
-
+        <Route path="/Chatbot" element={<Chatbot />} /> 
         {/* Fallback route for unmatched paths */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
