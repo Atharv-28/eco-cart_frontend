@@ -4,6 +4,7 @@ import "../styles/getRating.css";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import { dynamicUpload } from "../components/util/dynamicUpload";
+import AnimatedCard from "../components/AnimatedCard";
 
 function GetRating() {
   const [rating, setRating] = useState(null);
@@ -135,7 +136,6 @@ function GetRating() {
         }
       );
       console.log("Response from alternative products:", response.data);
-      
 
       const alternatives = response.data.products || [];
 
@@ -180,14 +180,23 @@ function GetRating() {
         {error && <p className="error-message">{error}</p>}
 
         {!error && productData && (
-          <ProductCard
+          //   <ProductCard
+          //     img={image_url}
+          //     name={title}
+          //     material={material}
+          //     link={productLink}
+          //     rating={rating}
+          //     rating_description={desc}
+          //     brand={brand}
+          //   />
+          <AnimatedCard
             img={image_url}
             name={title}
+            brand={brand}
             material={material}
             link={productLink}
             rating={rating}
             rating_description={desc}
-            brand={brand}
           />
         )}
 
