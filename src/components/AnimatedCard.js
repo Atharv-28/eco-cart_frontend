@@ -154,7 +154,7 @@ export default function AnimatedCard(props) {
         </div>
 
         {/* Chatbox */}
-        {showChatbox && <Chatbox />}
+        {showChatbox && <Chatbox productName={animatedName} brand={brand} material={material} />}
       </div>
     </div>
   );

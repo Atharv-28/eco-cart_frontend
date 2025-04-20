@@ -15,6 +15,16 @@ export default function LensSearchPage() {
   const [showMore, setShowMore] = useState(false);
   const [fetchError, setFetchError] = useState(false);
 
+  const [Product, setProduct] = useState({
+    name: "",
+    brand: "",
+    material: "",
+    rating: "",
+    desc: "",
+    img: "",
+    link: "",
+  });
+
   // Upload file to Cloudinary
   const handleFileSelect = async (e) => {
     const media = e.target.files[0];
@@ -128,10 +138,12 @@ export default function LensSearchPage() {
 
       const scrapedData = await scrapeResponse.json();
       console.log("Scraped data:", scrapedData);
-      if ( "Could not extract some details. The structure might have changed."==scrapedData) {
+      if (
+        "Could not extract some details. The structure might have changed." ==
+        scrapedData
+      ) {
         setFetchError(true);
-      }
-      else{
+      } else {
         const ratingResponse = await fetch(
           "https://eco-cart-backendnode.onrender.com/gemini-getRating",
           {
@@ -140,25 +152,36 @@ export default function LensSearchPage() {
             body: JSON.stringify(scrapedData),
           }
         );
-  
+
         if (!ratingResponse.ok) {
           throw new Error("Failed to get rating from gemini-getRating");
         }
-  
+
         const ratingData = await ratingResponse.json();
         console.log("Rating data:", ratingData);
-  
+        setProduct({
+          name: scrapedData.title,
+          brand: scrapedData.brand,
+          material: scrapedData.material,
+          rating: ratingData.rating,
+          desc: ratingData.description,
+          img: scrapedData.image_url,
+          link: analysis.product,
+        });
+
+        console.log("Product data:", Product);
+
         // Return the rating data to be passed to AnimatedCard
         return ratingData;
       }
       // Send scraped data to gemini-getRating
-      
     } catch (error) {
       console.error("Error in fetchAlternatives:", error);
-      setError("An error occurred while processing the product data. Please try again.");
+      setError(
+        "An error occurred while processing the product data. Please try again."
+      );
       return null;
     }
-  
   };
 
   const handleDragEnter = useCallback((e) => {
@@ -271,18 +294,20 @@ export default function LensSearchPage() {
             )}
           </div>
         )}
-
-        {alternatives && alternatives.name && (
-          <AnimatedCard
-            img={alternatives.img}
-            name={alternatives.name}
-            brand={alternatives.brand}
-            material={alternatives.material}
-            link={alternatives.link}
-            rating={alternatives.rating}
-            rating_description={alternatives.rating_description}
-          />
-        )}
+        <div className="found-prod">
+          <h4 className="product-details-header">Product found </h4>
+          {Product && (
+            <AnimatedCard
+              img={Product.img}
+              name={Product.name}
+              brand={Product.brand}
+              material={Product.material}
+              link={Product.link}
+              rating={Product.rating}
+              rating_description={Product.desc}
+            />
+          )}
+        </div>
       </main>
     </div>
   );

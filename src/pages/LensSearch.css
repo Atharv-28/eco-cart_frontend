@@ -43,6 +43,15 @@
   color: var(--primary-color);
 }
 
+.found-prod{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
 .upload-area {
   border: 2px dashed var(--primary-color);
   border-radius: 20px;
