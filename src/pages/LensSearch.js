@@ -2,10 +2,8 @@ import { useState, useCallback } from 'react';
 import { FiUpload, FiCamera, FiSearch, FiChevronDown } from 'react-icons/fi';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import './LensSearch.css';
-import axios from "axios";
 import ProductCard from '../components/ProductCard';
 import AnimatedCard from '../components/AnimatedCard';
-import { useEffect } from 'react';
 
 export default function LensSearchPage() {
   const [isDragging, setIsDragging] = useState(false);
@@ -113,7 +111,7 @@ const fetchAlternatives = async (analysis) => {
     const prodUrl = data.products[0].link;
 
     // Send prodUrl to the web scraping service
-    const scrapeResponse = await fetch('http://localhost:5000/scrape', {
+    const scrapeResponse = await fetch('http://172.16.254.136:5000/scrape', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: prodUrl }),

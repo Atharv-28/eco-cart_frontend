@@ -22,44 +22,142 @@ export default function GetRatingAnimated() {
     'Rating the product...',
   ];
 
-  const startProcess = () => {
-    setMessages([]);
-    setStep(1);
+  const scrape = async (url, isAlternative = false) => {
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/scrape", {
+        url: url,
+      });
+
+      const { image_url, material, title, brand } = response.data;
+
+      if (!material || !title) {
+        if (!isAlternative) {
+          setError(
+            "Web Scrapper failed to fetch product data. Please try again."
+          );
+        }
+        return;
+      }
+
+      if (isAlternative) {
+        await rateEco(title, brand, material, image_url, url, true);
+      } else {
+        setProductData({ image_url, material, title, brand });
+        setImageUrl(image_url);
+        setMaterial(material);
+        setTitle(title);
+        setBrand(brand);
+        setError(null);
+        setProductLink(url);
+
+        await rateEco(title, brand, material, image_url, url);
+      }
+    } catch (err) {
+      console.error("Error fetching product data:", err);
+      if (!isAlternative) {
+        setError("Failed to fetch product data. Please try again.");
+      }
+    }
   };
 
-  useEffect(() => {
-    if (step === 1) {
-      // show AI messages one by one
-      aiSteps.forEach((msg, idx) => {
-        setTimeout(() => {
-          setMessages(prev => [...prev, msg]);
-          if (idx === aiSteps.length - 1) {
-            // after AI steps, fetch real data
-            fetchData();
-          }
-        }, idx * 1500);
-      });
-    }
-  }, [step]);
-
-  const fetchData = async () => {
+  const rateEco = async (
+    title,
+    brand,
+    material,
+    image_url,
+    link,
+    isAlternative = false
+  ) => {
     try {
-      const scrapeRes = await axios.post('http://127.0.0.1:5000/scrape', { url: productLink });
-      const { title, material, image_url, brand } = scrapeRes.data;
-      const rateRes = await axios.post('https://eco-cart-backendnode.onrender.com/gemini-getRating', { title, brand, material });
-      const { rating, description, category } = rateRes.data;
-      setProductData({ title, material, image_url, brand });
-      setRating(rating);
-      setDesc(description);
-      // simulate alternative fetch if rating <3
-      if (rating < 3) {
-        const altRes = await axios.post('https://eco-cart-backendnode.onrender.com/search-product', { query: category });
-        setAltProducts(altRes.data.products.slice(0,3));
+      const response = await axios.post(
+        "https://eco-cart-backendnode.onrender.com/gemini-getRating",
+        {
+          title,
+          brand,
+          material,
+        }
+      );
+
+      const { rating, description, category } = response.data;
+      const parsedRating = parseInt(rating);
+
+      if (isAlternative) {
+        setAlternativeProducts((prev) => [
+          ...prev,
+          {
+            img: image_url,
+            name: title,
+            material,
+            rating,
+            rating_description: description,
+            link,
+            brand,
+          },
+        ]);
+      } else {
+        setRating(rating);
+        setDesc(description);
+        setError(null);
+
+        if (parsedRating >= 3) {
+          const productDetails = {
+            id: category,
+            name: title,
+            link,
+            img: image_url,
+            rating,
+            description,
+            material,
+          };
+        //   await dynamicUpload(productDetails);
+        } else {
+          suggestAlternative(category);
+        }
       }
-      setStep(2);
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error("Error fetching rating and review:", err);
+      if (!isAlternative) {
+        setError("Failed to fetch rating and review. Please try again.");
+      }
     }
+  };
+
+  const suggestAlternative = async (category) => {
+    try {
+      if (!category) {
+        setError("Invalid category for suggesting alternatives.");
+        return;
+      }
+
+      setAlternativeProducts([]);
+      setLoading(true);
+
+      const response = await axios.post(
+        "https://eco-cart-backendnode.onrender.com/search-product",
+        {
+          query: category,
+        }
+      );
+      console.log("Response from alternative products:", response.data);
+
+      const alternatives = response.data.products || [];
+
+      const top3Links = alternatives.slice(0, 3).map((product) => product.link);
+
+      for (const link of top3Links) {
+        await scrape(link, true);
+      }
+    } catch (err) {
+      console.error("Error fetching alternative products:", err);
+      setError("Failed to fetch alternative products. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRatingFetch = async () => {
+    setAlternativeProducts([]);
+    scrape(productLink);
   };
 
   return (
