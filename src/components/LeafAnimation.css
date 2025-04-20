@@ -1,0 +1,61 @@
+/* LeafAnimation.css */
+.leaf-container {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.leaves-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.leaves-wrapper.visible {
+  opacity: 1;
+}
+
+.leaf {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  transform: scale(0);
+  animation: leafEntrance 0.5s ease-out forwards;
+  transition: all 0.3s ease;
+}
+
+.leaves-wrapper.visible .leaf {
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+@keyframes leafEntrance {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1) rotate(10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+}
+
+.leaf:nth-child(1) { animation-delay: 0.1s; }
+.leaf:nth-child(2) { animation-delay: 0.2s; }
+.leaf:nth-child(3) { animation-delay: 0.3s; }
+.leaf:nth-child(4) { animation-delay: 0.4s; }
+
+.leaf:hover {
+  transform: scale(1.1) rotate(-15deg);
+  opacity: 1;
+}
