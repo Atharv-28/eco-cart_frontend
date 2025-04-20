@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import SearchBar from '../components/SearchBar';
-import '../styles/getRating.css';
-import axios from 'axios';
-import ProductCard from '../components/ProductCard';
+import React, { useState } from "react";
+import SearchBar from "../components/SearchBar";
+import "../styles/getRating.css";
+import axios from "axios";
+import ProductCard from "../components/ProductCard";
+import { dynamicUpload } from "../components/util/dynamicUpload";
+import AnimatedCard from "../components/AnimatedCard";
 
-export default function GetRatingAnimated() {
-  const [step, setStep] = useState(0); // 0: input, 1: AI process, 2: result
-  const [productLink, setProductLink] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [productData, setProductData] = useState(null);
+function GetRating() {
   const [rating, setRating] = useState(null);
-  const [desc, setDesc] = useState('');
-  const [altProducts, setAlternativeProducts] = useState([]);
+  const [desc, setDesc] = useState(null);
+  const [productLink, setProductLink] = useState("");
+  const [productData, setProductData] = useState(null);
   const [error, setError] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [brand, setBrand] = useState(null);
   const [material, setMaterial] = useState(null);
   const [title, setTitle] = useState(null);
-  const [brand, setBrand] = useState(null);
+  const [image_url, setImageUrl] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const aiSteps = [
-    'AI is thinking...',
-    'Fetching product from URL...',
-    'Fetching title...',
-    'Identifying material used...',
-    'Rating the product...',
-  ];
+  const [alternativeProducts, setAlternativeProducts] = useState([]);
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("http://127.0.0.1:5000/scrape", {
+      const response = await axios.post("http://172.16.254.136:5000/scrape", {
         url: url,
       });
 
@@ -115,6 +106,7 @@ export default function GetRatingAnimated() {
             description,
             material,
           };
+        //   await dynamicUpload(productDetails);
         } else {
           suggestAlternative(category);
         }
@@ -160,87 +152,81 @@ export default function GetRatingAnimated() {
     }
   };
 
-  const startProcess = () => {
-    setStep(1); // Move to the AI processing step
-    setMessages(aiSteps); // Set AI steps as messages
-    handleRatingFetch(); // Start fetching the rating
-  };
-
   const handleRatingFetch = async () => {
     setAlternativeProducts([]);
     scrape(productLink);
   };
 
   return (
-    <div className="get-rating-animated">
-      <AnimatePresence>
-        {step === 0 && (
-          <motion.div className="panel panel-left"
-            initial={{ x: 0 }} animate={{ x: 0 }} exit={{ x: '-100%' }}>
-            <div className="input-box">
-              <h2>Check Eco-Friendliness</h2>
-              <SearchBar placeholder="Enter product URL..." onSearch={setProductLink} />
-              <button className="btn btn-success mt-3" onClick={startProcess} disabled={!productLink}>
-                Get Rating
-              </button>
-            </div>
-          </motion.div>
-        )}
+    <div className="get-rating-page">
+      <div className="rating-card">
+        <h1 className="title">Check Eco-Friendliness</h1>
+        <p className="subtitle">
+          Paste a product link below to check how eco-friendly it is 🌱
+        </p>
 
-        {step >= 1 && (
-          <>
-            <motion.div className="panel panel-left"
-              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}>
-              {step < 2 ? (
-                <div className="ai-messages">
-                  {messages.map((m, i) => <p key={i}>{m}</p>)}
-                </div>
-              ) : (
-                <motion.div className="product-display" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <ProductCard {...{
-                    id: productData.category || 'Eco',
-                    name: productData.title,
-                    link: productLink,
-                    img: productData.image_url,
-                    rating,
-                    rating_description: desc,
-                    material: productData.material
-                  }} />
-                  {rating >= 3 && (
-                    <motion.img src="/eco-badge.png" alt="Badge"
-                      className="eco-badge"
-                      initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 300 }} />
-                  )}
-                </motion.div>
-              )}
-            </motion.div>
-
-            <motion.div className="panel panel-right"
-              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}>
-              <div className="chat-container">
-                <h3>AI Assistant</h3>
-                {messages.map((m, i) => <p key={i}>{m}</p>)}
-                {step === 2 && <p>How can I help further?</p>}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {step === 2 && altProducts.length > 0 && (
-        <div className="alternative-section">
-          <h4>Alternative Products</h4>
-          <div className="alt-grid">
-            {altProducts.map((prod, i) => (
-              <ProductCard key={i} {...{
-                id: prod.id, name: prod.name, link: prod.link,
-                img: prod.img, rating: prod.rating,
-                rating_description: prod.description, material: prod.material
-              }} />
-            ))}
-          </div>
+        <div className="form-container">
+          <SearchBar
+            placeholder="Enter product link..."
+            onSearch={setProductLink}
+          />
+          <button className="get-rating-button" onClick={handleRatingFetch}>
+            Get Rating
+          </button>
         </div>
-      )}
+
+        {loading && <p className="loading-message">Loading...</p>}
+
+        {error && <p className="error-message">{error}</p>}
+
+        {!error && productData && (
+          //   <ProductCard
+          //     img={image_url}
+          //     name={title}
+          //     material={material}
+          //     link={productLink}
+          //     rating={rating}
+          //     rating_description={desc}
+          //     brand={brand}
+          //   />
+          <AnimatedCard
+            img={image_url}
+            name={title}
+            brand={brand}
+            material={material}
+            link={productLink}
+            rating={rating}
+            rating_description={desc}
+          />
+        )}
+
+        {alternativeProducts.length > 0 && (
+          <div className="alternative-products-container">
+            <h3>Alternative Products</h3>
+            <div className="alternative-products">
+              {alternativeProducts.map((alt, index) => (
+                <div key={index} className="alternative-product-card">
+                  <ProductCard
+                    img={alt.img}
+                    name={alt.name}
+                    material={alt.material}
+                    link={alt.link}
+                    rating={alt.rating}
+                    rating_description={alt.rating_description}
+                    brand={alt.brand}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <p className="note">
+          We analyze packaging, materials & sustainability scores 🌍
+        </p>
+      </div>
     </div>
   );
 }
+
+export default GetRating;
