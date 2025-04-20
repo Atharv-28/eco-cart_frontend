@@ -158,3 +158,40 @@
       gap: 1rem;
     }
   }
+
+  /* Add Product Styles */
+.add-product-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.product-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.product-form .form-label {
+  font-weight: 500;
+  color: #2d3436;
+}
+
+.product-form .form-control {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #dfe6e9;
+  transition: all 0.3s ease;
+}
+
+.product-form .form-control:focus {
+  border-color: #74b9ff;
+  box-shadow: 0 0 0 3px rgba(116, 185, 255, 0.1);
+}
+
+.product-form .btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
