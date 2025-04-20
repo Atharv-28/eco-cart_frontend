@@ -1,5 +1,5 @@
 // components/ChatBot.js
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
 import './Chatbot.css'; 
 import axios from 'axios';
@@ -8,6 +8,7 @@ const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false); // State for typing animation
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -32,35 +33,25 @@ const ChatBot = () => {
     setInputMessage('');
 
     // Add temporary bot response (typing animation)
-    const tempBotMessage = {
-      text: '...',
-      isBot: true,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    };
-
+    const tempBotMessage = { sender: "bot", text: "" };
     setMessages((prev) => [...prev, tempBotMessage]);
 
     try {
+      setIsTyping(true);
+
       // Make POST request to /chatbot-general
       const response = await axios.post('https://eco-cart-backendnode.onrender.com/chatbot-general', {
         query: inputMessage,
       });
 
-      // Simulate typing delay
+      // Simulate typing animation
       setTimeout(() => {
-        // Replace tempBotMessage with actual bot response
-        setMessages((prev) => {
-          const updatedMessages = [...prev];
-          updatedMessages[updatedMessages.length - 1] = {
-            text: response.data.response, // Replace with actual response
-            isBot: true,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          };
-          return updatedMessages;
-        });
+        setIsTyping(false);
+        simulateTypingAnimation(response.data.response);
       }, 1500); // Adjust delay as needed
     } catch (error) {
       console.error('Error communicating with chatbot:', error);
+      setIsTyping(false);
 
       // Replace tempBotMessage with an error message
       setMessages((prev) => {
@@ -73,6 +64,28 @@ const ChatBot = () => {
         return updatedMessages;
       });
     }
+  };
+
+  const simulateTypingAnimation = (text) => {
+    let index = 0;
+    const botMessage = { sender: "bot", text: "" };
+    setMessages((prev) => [...prev, botMessage]);
+
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setMessages((prev) => {
+          const updatedMessages = [...prev];
+          const lastMessage = updatedMessages[updatedMessages.length - 1];
+          if (lastMessage.sender === "bot") {
+            lastMessage.text = text.slice(0, index + 1); // Append the next character
+          }
+          return updatedMessages;
+        });
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // Adjust typing speed here
   };
 
   return (
@@ -95,6 +108,13 @@ const ChatBot = () => {
                 </div>
               </div>
             ))}
+            {isTyping && (
+              <div className="chatbot-message bot typing-indicator">
+                <span>.</span>
+                <span>.</span>
+                <span>.</span>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 

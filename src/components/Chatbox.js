@@ -75,7 +75,10 @@ const Chatbox = ({ productName, brand, material }) => {
       if (index < text.length) {
         setMessages((prev) => {
           const updatedMessages = [...prev];
-          updatedMessages[updatedMessages.length - 1].text += text[index];
+          const lastMessage = updatedMessages[updatedMessages.length - 1];
+          if (lastMessage.sender === "bot") {
+            lastMessage.text = text.slice(0, index + 1); // Append the next character
+          }
           return updatedMessages;
         });
         index++;
