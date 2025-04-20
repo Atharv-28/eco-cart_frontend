@@ -5,6 +5,7 @@ const Chatbox = ({ productName, brand, material }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [showChatbox, setShowChatbox] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // State for typing animation
 
   // Save props in state
   const [productDetails, setProductDetails] = useState({
@@ -36,17 +37,23 @@ const Chatbox = ({ productName, brand, material }) => {
     setInput("");
 
     try {
+      // Show typing animation
+      setIsTyping(true);
+
       // Send request to chatbot-getRating with product details from state
-      const response = await fetch("https://eco-cart-backendnode.onrender.com/chatbot-getRating", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: input,
-          productName: productDetails.productName,
-          brand: productDetails.brand,
-          material: productDetails.material,
-        }),
-      });
+      const response = await fetch(
+        "https://eco-cart-backendnode.onrender.com/chatbot-getRating",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: input,
+            productName: productDetails.productName,
+            brand: productDetails.brand,
+            material: productDetails.material,
+          }),
+        }
+      );
 
       console.log(productDetails.productName);
       console.log(productDetails.material);
@@ -55,10 +62,15 @@ const Chatbox = ({ productName, brand, material }) => {
       const data = await response.json();
       console.log("Chatbot response:", data);
 
-      const botMessage = { sender: "bot", text: data.response };
-      setMessages((prev) => [...prev, botMessage]);
+      // Simulate typing delay
+      setTimeout(() => {
+        setIsTyping(false); // Hide typing animation
+        const botMessage = { sender: "bot", text: data.response };
+        setMessages((prev) => [...prev, botMessage]);
+      }, 1500); // Adjust delay as needed
     } catch (error) {
       console.error("Error communicating with chatbot:", error);
+      setIsTyping(false); // Hide typing animation
       const botMessage = {
         sender: "bot",
         text: "An error occurred. Please try again later.",
@@ -80,6 +92,13 @@ const Chatbox = ({ productName, brand, material }) => {
             {msg.text}
           </div>
         ))}
+        {isTyping && (
+          <div className="chatbox-message bot typing-indicator">
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </div>
+        )}
       </div>
       <div className="chatbox-input">
         <input
