@@ -294,9 +294,10 @@ export default function LensSearchPage() {
             )}
           </div>
         )}
-        <div className="found-prod">
-          <h4 className="product-details-header">Product found </h4>
-          {Product && (
+        {Product.name && (
+          <div className="found-prod">
+            <h4 className="product-details-header">Product found </h4>
+
             <AnimatedCard
               img={Product.img}
               name={Product.name}
@@ -306,8 +307,8 @@ export default function LensSearchPage() {
               rating={Product.rating}
               rating_description={Product.desc}
             />
-          )}
-        </div>
+          </div>
+        )}
       </main>
     </div>
   );
