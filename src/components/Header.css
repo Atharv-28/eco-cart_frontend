@@ -1,10 +1,10 @@
-.navbar-brand {
+.navbar-price {
   font-size: 1.5rem;
   display: flex;
   align-items: center;
 }
 
-.navbar-brand img {
+.navbar-price img {
   height: 50px;
   width: 50px;
   margin-right: 10px;

@@ -17,7 +17,7 @@ export default function LensSearchPage() {
 
   const [Product, setProduct] = useState({
     name: "",
-    brand: "",
+    price: "",
     material: "",
     rating: "",
     desc: "",
@@ -161,7 +161,7 @@ export default function LensSearchPage() {
         console.log("Rating data:", ratingData);
         setProduct({
           name: scrapedData.title,
-          brand: scrapedData.brand,
+          price: scrapedData.price,
           material: scrapedData.material,
           rating: ratingData.rating,
           desc: ratingData.description,
@@ -301,7 +301,7 @@ export default function LensSearchPage() {
             <AnimatedCard
               img={Product.img}
               name={Product.name}
-              brand={Product.brand}
+              price={Product.price}
               material={Product.material}
               link={Product.link}
               rating={Product.rating}

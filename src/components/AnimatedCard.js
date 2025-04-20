@@ -5,7 +5,7 @@ import Chatbox from "./Chatbox"; // Import the Chatbox component
 import './AnimatedCard.css'; // Add custom styles for animations
 
 export default function AnimatedCard(props) {
-  const { id, name, link, img, rating, rating_description, material, brand } = props;
+  const { id, name, link, img, rating, rating_description, material, price } = props;
 
   const [animatedName, setAnimatedName] = useState('');
   const [filledStars, setFilledStars] = useState(0);
@@ -106,6 +106,7 @@ export default function AnimatedCard(props) {
                 }}
               >
                 {animatedName}
+                  {/* {name} */}
               </h5>
               <a
                 href={link}
@@ -123,7 +124,7 @@ export default function AnimatedCard(props) {
               <strong>Material:</strong> {material}
             </p>
             <p className="card-text text-muted mb-2">
-              <strong>Brand:</strong> {brand}
+              <strong>price:</strong> {price}
             </p>
 
             {/* Animated Stars */}
@@ -154,7 +155,7 @@ export default function AnimatedCard(props) {
         </div>
 
         {/* Chatbox */}
-        {showChatbox && <Chatbox productName={animatedName} brand={brand} material={material} />}
+        {showChatbox && <Chatbox productName={animatedName} price={price} material={material} />}
       </div>
     </div>
   );

@@ -60,9 +60,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Branding Section */}
+          {/* priceing Section */}
           <div className="col-auto text-center">
-            <h4 className="eco-cart-branding">Eco-Cart</h4>
+            <h4 className="eco-cart-priceing">Eco-Cart</h4>
           </div>
 
           {/* Contact Us Section */}

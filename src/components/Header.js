@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
       <div className="container">
-        <NavLink className="navbar-brand d-flex align-items-center fw-bold text-success" to="/">
+        <NavLink className="navbar-price d-flex align-items-center fw-bold text-success" to="/">
           <img
             src="/eco-cart.png"
             alt="Eco-Cart Logo"

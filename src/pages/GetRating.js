@@ -12,7 +12,7 @@ function GetRating() {
   const [productLink, setProductLink] = useState("");
   const [productData, setProductData] = useState(null);
   const [error, setError] = useState(null);
-  const [brand, setBrand] = useState(null);
+  const [price, setprice] = useState(null);
   const [material, setMaterial] = useState(null);
   const [title, setTitle] = useState(null);
   const [image_url, setImageUrl] = useState(null);
@@ -22,7 +22,7 @@ function GetRating() {
   const [aiSteps, setAiSteps] = useState([]);
   const [typedProduct, setTypedProduct] = useState({
     name: "",
-    brand: "",
+    price: "",
     material: "",
     rating: ""
   });
@@ -50,7 +50,7 @@ function GetRating() {
     if (productData) {
       const textToType = [
         { key: "name", text: title },
-        { key: "brand", text: brand },
+        { key: "price", text: price },
         { key: "material", text: material },
         { key: "rating", text: rating }
       ];
@@ -72,8 +72,9 @@ function GetRating() {
         url: url,
       });
 
-      const { image_url, material, title, brand } = response.data;
-
+      const { image_url, material, title, price } = response.data;
+      console.log("Scrape API Response:", response.data); // Debugging
+      
       if (!material || !title) {
         if (!isAlternative) {
           setError("Web Scrapper failed to fetch product data. Please try again.");
@@ -82,16 +83,16 @@ function GetRating() {
       }
 
       if (isAlternative) {
-        await rateEco(title, brand, material, image_url, url, true);
+        await rateEco(title, price, material, image_url, url, true);
       } else {
-        setProductData({ image_url, material, title, brand });
+        setProductData({ image_url, material, title, price });
         setImageUrl(image_url);
         setMaterial(material);
         setTitle(title);
-        setBrand(brand);
+        setprice(price);
         setError(null);
         setProductLink(url);
-        await rateEco(title, brand, material, image_url, url);
+        await rateEco(title, price, material, image_url, url);
       }
     } catch (err) {
       console.error("Error fetching product data:", err);
@@ -101,16 +102,20 @@ function GetRating() {
     }
   };
 
-  const rateEco = async (title, brand, material, image_url, link, isAlternative = false) => {
+  const rateEco = async (title, price, material, image_url, link, isAlternative = false) => {
     try {
+        console.log("Rate() Called");
+        
       const response = await axios.post(
         "https://eco-cart-backendnode.onrender.com/gemini-getRating",
-        { title, brand, material }
+        { title, material }
       );
 
       console.log("Rating API Response:", response.data); // Debugging
 
       const { rating, description, category } = response.data;
+      console.log("Rating Data:", rating, description, category); // Debugging
+      
       const parsedRating = parseInt(rating);
 
       if (isAlternative) {
@@ -121,13 +126,13 @@ function GetRating() {
           rating,
           rating_description: description,
           link,
-          brand,
+          price,
         }]);
       } else {
         setRating(parsedRating); // Ensure this is being set
         setDesc(description);
         setMaterial(material);
-        setBrand(brand);
+        setprice(price);
         setTitle(title);
         setError(null);
 
@@ -141,6 +146,10 @@ function GetRating() {
       console.error("Error fetching rating:", err);
       if (!isAlternative) setError("Failed to fetch rating. Please try again.");
     }
+    finally {
+        console.log("Rating fetch completed"); // Debugging
+        
+        }
   };
 
   const suggestAlternative = async (category) => {
@@ -166,7 +175,7 @@ function GetRating() {
     setIsAnalyzing(true);
     setAlternativeProducts([]);
     setAiSteps([]);
-    setTypedProduct({ name: "", brand: "", material: "", rating: "" });
+    setTypedProduct({ name: "", price: "", material: "", rating: "" });
     await scrape(productLink);
   };
 
@@ -214,7 +223,7 @@ function GetRating() {
               <AnimatedCard
                 img={image_url}
                 name={title}
-                brand={brand}
+                price={price}
                 material={material}
                 link={productLink}
                 rating={rating}
@@ -236,7 +245,7 @@ function GetRating() {
                       link={alt.link}
                       rating={alt.rating}
                       rating_description={alt.rating_description}
-                      brand={alt.brand}
+                      price={alt.price}
                     />
                   ))}
                 </div>

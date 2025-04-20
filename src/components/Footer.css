@@ -110,19 +110,19 @@
   color: #6c757d;
 }
 
-.branding {
+.priceing {
   display: flex;
   align-items: center;
   gap: 0.5rem; /* Space between logo and text */
 }
 
-.branding-logo {
+.priceing-logo {
   width: 30px; /* Adjust the size of the logo */
   height: 30px;
   object-fit: contain; /* Ensure the logo fits within the dimensions */
 }
 
-.eco-cart-branding {
+.eco-cart-priceing {
   font-size: 1.5rem;
   font-weight: bold;
   color: #198754;

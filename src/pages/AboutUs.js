@@ -88,7 +88,7 @@ function AboutUs() {
             <div className="google-api-list">
 
               <div className="api-card">
-                <img src="https://firebase.google.com/downloads/brand-guidelines/PNG/logo-logomark.png" alt="Firebase" />
+                <img src="https://firebase.google.com/downloads/price-guidelines/PNG/logo-logomark.png" alt="Firebase" />
                 <span>Firebase</span>
               </div>
 

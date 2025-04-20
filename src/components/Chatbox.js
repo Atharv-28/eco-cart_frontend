@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./Chatbox.css";
 
-const Chatbox = ({ productName, brand, material }) => {
+const Chatbox = ({ productName, price, material }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [showChatbox, setShowChatbox] = useState(false);
   const [isTyping, setIsTyping] = useState(false); // State for typing animation
   const [productDetails, setProductDetails] = useState({
     productName: "",
-    brand: "NA",
+    price: "NA",
     material: "",
   });
 
   useEffect(() => {
-    setProductDetails({ productName, brand, material });
+    setProductDetails({ productName, price, material });
 
     const chatboxTimeout = setTimeout(() => {
       setShowChatbox(true);
@@ -22,7 +22,7 @@ const Chatbox = ({ productName, brand, material }) => {
     return () => {
       clearTimeout(chatboxTimeout);
     };
-  }, [productName, brand, material]);
+  }, [productName, price, material]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -43,7 +43,7 @@ const Chatbox = ({ productName, brand, material }) => {
           body: JSON.stringify({
             query: input,
             productName: productDetails.productName,
-            brand: productDetails.brand,
+            price: productDetails.price,
             material: productDetails.material,
           }),
         }
