@@ -5,6 +5,7 @@ import "../styles/getRating.css";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import AnimatedCard from "../components/AnimatedCard";
+import { Alert } from "bootstrap";
 
 function GetRating() {
   const [rating, setRating] = useState(null);
@@ -95,7 +96,7 @@ function GetRating() {
         await rateEco(title, price, material, image_url, url);
       }
     } catch (err) {
-      console.error("Error fetching product data:", err);
+      alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
       if (!isAlternative) {
         setError("Failed to fetch product data. Please try again.");
       }

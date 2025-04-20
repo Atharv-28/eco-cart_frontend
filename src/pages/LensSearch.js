@@ -176,7 +176,7 @@ export default function LensSearchPage() {
       }
       // Send scraped data to gemini-getRating
     } catch (error) {
-      console.error("Error in fetchAlternatives:", error);
+      alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
       setError(
         "An error occurred while processing the product data. Please try again."
       );
