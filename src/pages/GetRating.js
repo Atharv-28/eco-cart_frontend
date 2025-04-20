@@ -12,7 +12,13 @@ export default function GetRatingAnimated() {
   const [productData, setProductData] = useState(null);
   const [rating, setRating] = useState(null);
   const [desc, setDesc] = useState('');
-  const [altProducts, setAltProducts] = useState([]);
+  const [altProducts, setAlternativeProducts] = useState([]);
+  const [error, setError] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [material, setMaterial] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [brand, setBrand] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const aiSteps = [
     'AI is thinking...',
@@ -109,7 +115,6 @@ export default function GetRatingAnimated() {
             description,
             material,
           };
-        //   await dynamicUpload(productDetails);
         } else {
           suggestAlternative(category);
         }
@@ -155,6 +160,12 @@ export default function GetRatingAnimated() {
     }
   };
 
+  const startProcess = () => {
+    setStep(1); // Move to the AI processing step
+    setMessages(aiSteps); // Set AI steps as messages
+    handleRatingFetch(); // Start fetching the rating
+  };
+
   const handleRatingFetch = async () => {
     setAlternativeProducts([]);
     scrape(productLink);
@@ -182,7 +193,7 @@ export default function GetRatingAnimated() {
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}>
               {step < 2 ? (
                 <div className="ai-messages">
-                  {messages.map((m,i) => <p key={i}>{m}</p>)}
+                  {messages.map((m, i) => <p key={i}>{m}</p>)}
                 </div>
               ) : (
                 <motion.div className="product-display" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -208,7 +219,7 @@ export default function GetRatingAnimated() {
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}>
               <div className="chat-container">
                 <h3>AI Assistant</h3>
-                {messages.map((m,i) => <p key={i}>{m}</p>)}
+                {messages.map((m, i) => <p key={i}>{m}</p>)}
                 {step === 2 && <p>How can I help further?</p>}
               </div>
             </motion.div>
@@ -220,7 +231,7 @@ export default function GetRatingAnimated() {
         <div className="alternative-section">
           <h4>Alternative Products</h4>
           <div className="alt-grid">
-            {altProducts.map((prod,i) => (
+            {altProducts.map((prod, i) => (
               <ProductCard key={i} {...{
                 id: prod.id, name: prod.name, link: prod.link,
                 img: prod.img, rating: prod.rating,
