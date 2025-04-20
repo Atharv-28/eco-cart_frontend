@@ -165,6 +165,8 @@ const TypingEffect = ({ text = '' }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
+    if (typeof text !== 'string') return; // ⛑️ Check if text is a valid string
+  
     let index = 0;
     const interval = setInterval(() => {
       if (index < text.length) {
@@ -177,6 +179,7 @@ const TypingEffect = ({ text = '' }) => {
   
     return () => clearInterval(interval);
   }, [text]);
+  
   
 
   return (

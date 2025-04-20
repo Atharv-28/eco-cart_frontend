@@ -1,215 +1,76 @@
-/* Reset + Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body,
-html {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f4f3;
-    color: #333;
-}
-
-/* Page Wrapper */
-.get-rating-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* getRating.css */
+.get-rating-container {
+    overflow: hidden;
+    position: relative;
     min-height: 100vh;
     padding: 2rem;
     background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
-}
-
-/* Card Styling */
-.rating-card {
-    background-color: #ffffff;
-    padding: 2.5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 80vw;
-    transition: all 0.3s ease-in-out;
-}
-
-.rating-card:hover {
-    transform: translateY(-4px);
-}
-
-/* Icon */
-.eco-icon {
-    font-size: 3rem;
-    color: #2e7d32;
-    margin-bottom: 0.5rem;
-}
-
-/* Titles & Subtitles */
-.title {
-    font-size: 2rem;
-    color: #2e7d32;
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-.subtitle {
-    font-size: 1rem;
-    color: #4d684e;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-    max-width: 320px;
-}
-
-/* Form Styles */
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-}
-
-.product-link-input {
-    width: 100%;
-    max-width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: 1.5px solid #c8e6c9;
-    transition: border-color 0.3s ease;
-}
-
-.product-link-input:focus {
-    border-color: #2e7d32;
-    outline: none;
-}
-
-/* Button */
-.get-rating-button {
-    background-color: #2e7d32;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: fit-content;
-    margin-bottom: 5vh;
-}
-
-.get-rating-button:hover {
-    background-color: #1b5e20;
-}
-
-/* Footer Note */
-.note {
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    color: #777;
-    text-align: center;
-    max-width: 300px;
-    line-height: 1.4;
-}
-
-.alternative-products-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    width: 60vw;
-}
-
-.alternative-products{
-    /* border: 2px solid red; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    width: 50vw;
-}
-
-/* Responsive Adjustments */
-@media screen and (max-width: 480px) {
-    .rating-card {
-        padding: 2rem 1.25rem;
-    }
-
-    .title {
-        font-size: 1.75rem;
-    }
-
-    .product-link-input {
-        font-size: 0.95rem;
-    }
-
-    .get-rating-button {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-/* Rating Result Styling */
-.rating-result {
-    background-color: #e8f5e9;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-}
-
-.rating-result h2 {
-    color: #2e7d32;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.rating-result p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-}
-
-/* Note Styling (Keep as is) */
-.note {
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    color: #777;
-    text-align: center;
-    max-width: 300px;
-    line-height: 1.4;
-}
-
-/* getRating.css */
-.get-rating-page {
-    display: flex;
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
   }
   
-  .analysis-panel {
+  .analysis-wrapper {
     display: flex;
     width: 200%;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .get-rating-page.result .analysis-panel {
+  .get-rating-container.analyzing .analysis-wrapper {
     transform: translateX(-50%);
   }
   
-  .panel-content {
+  .input-section,
+  .analysis-section {
     width: 50%;
     padding: 2rem;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .rating-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2rem;
+    color: #2e7d32;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    color: #4d684e;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  
+  .get-rating-button {
+    background: #2e7d32;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .get-rating-button:hover {
+    transform: translateY(-2px);
   }
   
   .ai-process {
@@ -218,6 +79,8 @@ html {
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
+    max-width: 800px;
+    margin: 0 auto;
   }
   
   .ai-header {
@@ -246,31 +109,27 @@ html {
     min-height: 200px;
   }
   
-  .ai-message {
+  .ai-step {
     padding: 1rem;
     margin: 1rem 0;
     background: #f8f9fa;
     border-radius: 12px;
     position: relative;
     opacity: 0;
-    animation: messageAppear 0.5s forwards;
+    animation: fadeInUp 0.5s forwards;
   }
   
-  @keyframes messageAppear {
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .typing-indicator {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    gap: 4px;
   }
   
   .typing-indicator::before {
     content: "";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
     width: 6px;
     height: 6px;
     background: #2ecc71;
@@ -284,12 +143,25 @@ html {
   }
   
   .slide-up {
-    animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+  @keyframes slideInUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .alternatives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 1rem;
   }
   
   .eco-badge-pop {
@@ -301,122 +173,18 @@ html {
     80% { transform: scale(1.1); }
     100% { transform: scale(1); }
   }
-
-/* getRating.css */
-.get-rating-container {
-  overflow: hidden;
-  position: relative;
-  min-height: 100vh;
-  padding: 2rem;
-}
-
-.analysis-wrapper {
-  display: flex;
-  width: 200%;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.analysis-wrapper.analyzing {
-  transform: translateX(-50%);
-}
-
-.input-section,
-.analysis-section {
-  width: 50%;
-  padding: 2rem;
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.ai-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.ai-loader {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #2ecc71;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.8; }
-}
-
-.ai-process {
-  margin: 2rem 0;
-  min-height: 200px;
-}
-
-.ai-step {
-  padding: 1rem;
-  margin: 1rem 0;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-  opacity: 0;
-  animation: fadeInUp 0.5s forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  
+  @media (max-width: 768px) {
+    .input-section,
+    .analysis-section {
+      padding: 1rem;
+    }
+    
+    .rating-card {
+      padding: 1.5rem;
+    }
+    
+    .title {
+      font-size: 1.75rem;
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.typing-indicator::before {
-  content: "";
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  background: #2ecc71;
-  border-radius: 50%;
-  animation: typing 1.4s infinite;
-}
-
-@keyframes typing {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.slide-up {
-  animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.eco-badge {
-  animation: popIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes popIn {
-  0% { transform: scale(0); }
-  80% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}

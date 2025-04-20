@@ -25,8 +25,8 @@ const Chatbox = () => {
 
     setInput('');
 
-    // Simulate backend response
-    const response = await fetch('http://127.0.0.1:3000/chat', {
+    // Simulate backend response  https://eco-cart-backendnode.onrender.com
+    const response = await fetch('http://127.0.0.1:3000/chatbot-getRating', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: input }),
