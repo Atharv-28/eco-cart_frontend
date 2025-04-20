@@ -6,8 +6,6 @@ const Chatbox = ({ productName, brand, material }) => {
   const [input, setInput] = useState("");
   const [showChatbox, setShowChatbox] = useState(false);
   const [isTyping, setIsTyping] = useState(false); // State for typing animation
-
-  // Save props in state
   const [productDetails, setProductDetails] = useState({
     productName: "",
     brand: "NA",
@@ -15,10 +13,8 @@ const Chatbox = ({ productName, brand, material }) => {
   });
 
   useEffect(() => {
-    // Initialize product details state with props
     setProductDetails({ productName, brand, material });
 
-    // Show chatbox after animations
     const chatboxTimeout = setTimeout(() => {
       setShowChatbox(true);
     }, 3000);
@@ -37,10 +33,8 @@ const Chatbox = ({ productName, brand, material }) => {
     setInput("");
 
     try {
-      // Show typing animation
       setIsTyping(true);
 
-      // Send request to chatbot-getRating with product details from state
       const response = await fetch(
         "https://eco-cart-backendnode.onrender.com/chatbot-getRating",
         {
@@ -55,28 +49,40 @@ const Chatbox = ({ productName, brand, material }) => {
         }
       );
 
-      console.log(productDetails.productName);
-      console.log(productDetails.material);
-      console.log(input);
-
       const data = await response.json();
-      console.log("Chatbot response:", data);
 
-      // Simulate typing delay
       setTimeout(() => {
-        setIsTyping(false); // Hide typing animation
-        const botMessage = { sender: "bot", text: data.response };
-        setMessages((prev) => [...prev, botMessage]);
-      }, 1500); // Adjust delay as needed
+        setIsTyping(false);
+        simulateTypingAnimation(data.response);
+      }, 1500);
     } catch (error) {
       console.error("Error communicating with chatbot:", error);
-      setIsTyping(false); // Hide typing animation
+      setIsTyping(false);
       const botMessage = {
         sender: "bot",
         text: "An error occurred. Please try again later.",
       };
       setMessages((prev) => [...prev, botMessage]);
     }
+  };
+
+  const simulateTypingAnimation = (text) => {
+    let index = 0;
+    const botMessage = { sender: "bot", text: "" };
+    setMessages((prev) => [...prev, botMessage]);
+
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setMessages((prev) => {
+          const updatedMessages = [...prev];
+          updatedMessages[updatedMessages.length - 1].text += text[index];
+          return updatedMessages;
+        });
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // Adjust typing speed here
   };
 
   return (
