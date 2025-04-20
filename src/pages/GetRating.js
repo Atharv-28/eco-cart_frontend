@@ -21,7 +21,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("https://eco-cart-backendpython.onrender.com/scrape", {
+      const response = await axios.post("http://172.16.254.136:5000/scrape", {
         url: url,
       });
 

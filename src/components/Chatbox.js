@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chatbox.css';
 
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [showChatbox, setShowChatbox] = useState(false);
+
+  useEffect(() => {
+    // Show chatbox after animations
+    const chatboxTimeout = setTimeout(() => {
+      setShowChatbox(true); // Ensure this is triggered
+    }, 3000); // Wait for animations to complete
+
+    return () => {
+      clearTimeout(chatboxTimeout);
+    };
+  }, []);
 
   const handleSend = async () => {
     if (!input.trim()) return;
