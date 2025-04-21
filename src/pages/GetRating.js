@@ -71,7 +71,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("https://vu9yhycr1g.ap.loclx.io/scrape", {
+      const response = await axios.post("http://flvpdqnklo.ap.loclx.io/scrape", {
         url: url,
       });
 
@@ -98,7 +98,7 @@ function GetRating() {
         await rateEco(title, price, material, image_url, url);
       }
     } catch (err) {
-      alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
+      // alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
       if (!isAlternative) {
         setError("Failed to fetch product data. Please try again.");
       }

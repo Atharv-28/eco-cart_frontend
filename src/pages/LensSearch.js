@@ -126,7 +126,7 @@ export default function LensSearchPage() {
       const prodUrl = data.products[0].link;
 
       // Send prodUrl to the web scraping service
-      const scrapeResponse = await fetch("http://192.168.113.8:5000/scrape", {
+      const scrapeResponse = await fetch("http://flvpdqnklo.ap.loclx.io/scrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: prodUrl }),
@@ -176,7 +176,7 @@ export default function LensSearchPage() {
       }
       // Send scraped data to gemini-getRating
     } catch (error) {
-      alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
+      // alert("Python Scrapping Module is responding status code 529! cause of free tier of hosting");
       setError(
         "An error occurred while processing the product data. Please try again."
       );
