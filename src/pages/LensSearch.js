@@ -126,7 +126,7 @@ export default function LensSearchPage() {
       const prodUrl = data.products[0].link;
 
       // Send prodUrl to the web scraping service
-      const scrapeResponse = await fetch("http://172.16.254.136:5000/scrape", {
+      const scrapeResponse = await fetch("http://192.168.113.8:5000/scrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: prodUrl }),

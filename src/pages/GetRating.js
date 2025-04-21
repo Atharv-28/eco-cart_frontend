@@ -5,7 +5,7 @@ import "../styles/getRating.css";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import AnimatedCard from "../components/AnimatedCard";
-import { Alert } from "bootstrap";
+import { dynamicUpload } from "../components/util/dynamicUpload";
 
 function GetRating() {
   const [rating, setRating] = useState(null);
@@ -27,6 +27,8 @@ function GetRating() {
     material: "",
     rating: ""
   });
+  const [productToUpload, setProductToUpload] = useState(null);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (isAnalyzing) {
@@ -69,7 +71,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("http://172.16.254.136:5000/scrape", {
+      const response = await axios.post("https://vu9yhycr1g.ap.loclx.io/scrape", {
         url: url,
       });
 
@@ -120,7 +122,7 @@ function GetRating() {
       const parsedRating = parseInt(rating);
 
       if (isAlternative) {
-        setAlternativeProducts(prev => [...prev, {
+        const productDetails = {
           img: image_url,
           name: title,
           material,
@@ -128,7 +130,10 @@ function GetRating() {
           rating_description: description,
           link,
           price,
-        }]);
+        };
+
+        setAlternativeProducts((prev) => [...prev, productDetails]);
+        await dynamicUpload(productDetails); // Use the defined productDetails
       } else {
         setRating(parsedRating); // Ensure this is being set
         setDesc(description);
@@ -138,7 +143,19 @@ function GetRating() {
         setError(null);
 
         if (parsedRating >= 3) {
-          const productDetails = { id: category, name: title, link, img: image_url, rating, description, material };
+          const productDetails = {
+            id: category,
+            name: title,
+            link,
+            img: image_url,
+            rating,
+            description,
+            material,
+            price,
+          };
+
+          setProduct(productDetails); // Define and use setProduct
+          setProductToUpload(productDetails);
         } else {
           suggestAlternative(category);
         }
@@ -179,6 +196,12 @@ function GetRating() {
     setTypedProduct({ name: "", price: "", material: "", rating: "" });
     await scrape(productLink);
   };
+
+  useEffect(() => {
+    if (productToUpload) {
+      dynamicUpload(productToUpload);
+    }
+  }, [productToUpload]);
 
   return (
     <div className={`get-rating-container ${isAnalyzing ? "analyzing" : ""}`}>

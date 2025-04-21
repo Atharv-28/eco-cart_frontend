@@ -20,7 +20,7 @@ export default function HomePage() {
   // Fetch products (keep existing useEffect)
   useEffect(() => {
     const fetchProducts = async () => {
-      alert("Python Scrapping API module is sending status code 529 Due to free tier of hosting!, Hence Most features won't work right now!")
+      // alert("Python Scrapping API module is sending status code 529 Due to free tier of hosting!, Hence Most features won't work right now!")
       try {
         const productsCollection = collection(db, 'products'); // Firestore collection name
         const productSnapshot = await getDocs(productsCollection);
