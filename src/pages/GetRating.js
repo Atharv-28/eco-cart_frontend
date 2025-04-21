@@ -71,7 +71,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("https://svcrmvp7r8.ap.loclx.io/scrape", {
+      const response = await axios.post("http://2qztvhxzsw.ap.loclx.io/scrape", {
         url: url,
       });
 
