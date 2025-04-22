@@ -71,7 +71,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("http://eco-cart.servehttp.com:5000/scrape", {
+      const response = await axios.post("https://scrapping-relay.onrender.com/scrape", {
         url: url,
       });
 
