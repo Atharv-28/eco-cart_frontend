@@ -71,7 +71,7 @@ function GetRating() {
 
   const scrape = async (url, isAlternative = false) => {
     try {
-      const response = await axios.post("https://2qztvhxzsw.ap.loclx.io/scrape", {
+      const response = await axios.post("http://eco-cart.servehttp.com:5000/scrape", {
         url: url,
       });
 
@@ -133,7 +133,6 @@ function GetRating() {
         };
 
         setAlternativeProducts((prev) => [...prev, productDetails]);
-        await dynamicUpload(productDetails); // Use the defined productDetails
       } else {
         setRating(parsedRating); // Ensure this is being set
         setDesc(description);
@@ -155,7 +154,7 @@ function GetRating() {
           };
 
           setProduct(productDetails); // Define and use setProduct
-          setProductToUpload(productDetails);
+          await dynamicUpload(productDetails); // Use the defined productDetails
         } else {
           suggestAlternative(category);
         }
