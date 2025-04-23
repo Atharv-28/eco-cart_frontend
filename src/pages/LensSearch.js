@@ -80,6 +80,7 @@ export default function LensSearchPage() {
     setLoading(true);
     setError("");
     try {
+      // console.log("Selected file:", selectedFile); // Debugging
       const response = await fetchWithRetry(
         "https://eco-cart-backendnode.onrender.com/gemini-ecoLens",
         {
@@ -126,7 +127,7 @@ export default function LensSearchPage() {
       const prodUrl = data.products[0].link;
 
       // Send prodUrl to the web scraping service
-      const scrapeResponse = await fetch("http://flvpdqnklo.ap.loclx.io/scrape", {
+      const scrapeResponse = await fetch("https://scrapping-relay.onrender.com/scrape", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: prodUrl }),
