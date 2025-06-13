@@ -42,7 +42,7 @@ Eco-Cart is a web application designed to promote sustainable living by providin
    cd eco-cart
 
 ## File Structure
-
+```
 eco-cart/
 ├── public/
 │   ├── eco-cart.png
@@ -76,3 +76,4 @@ eco-cart/
 │   └── reportWebVitals.js
 ├── package.json
 └── README.md
+```
