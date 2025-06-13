@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Eco-Cart 🌱
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Eco-Cart is a web application designed to promote sustainable living by providing eco-product ratings, alternatives, and insights. The platform empowers users to make environmentally conscious decisions by analyzing product sustainability and offering eco-friendly alternatives.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Product Sustainability Analysis**: Analyze the eco-friendliness of products based on materials, packaging, and other factors.
+- **Eco-Friendly Alternatives**: Suggests better alternatives for products with low eco-scores.
+- **Chatbot Assistant**: An AI-powered chatbot to answer user queries about products and sustainability.
+- **Admin Dashboard**: Manage products, users, and other administrative tasks.
+- **Dynamic Product Upload**: Upload product details dynamically to Firestore.
+- **Responsive Design**: Fully responsive UI for seamless use across devices.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+### Frontend
+- **React**: For building the user interface.
+- **Bootstrap**: For responsive and modern UI components.
+- **Framer Motion**: For animations and transitions.
+- **React Icons**: For icons and visual elements.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend
+- **Node.js**: For server-side logic.
+- **Express.js**: For building RESTful APIs.
+- **Firebase**: For database and authentication.
 
-### `npm run build`
+### APIs
+- **Gemini API**: For product rating and sustainability analysis.
+- **Custom Search API**: For fetching product details.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/eco-cart.git
+   cd eco-cart
 
-### `npm run eject`
+## File Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+eco-cart/
+├── public/
+│   ├── eco-cart.png
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── AnimatedCard.js
+│   │   ├── Chatbot.js
+│   │   ├── Chatbox.js
+│   │   ├── Footer.js
+│   │   └── util/
+│   │       ├── config.js
+│   │       └── dynamicUpload.js
+│   ├── pages/
+│   │   ├── Admin/
+│   │   │   ├── AddProduct.js
+│   │   │   └── UserManagement.js
+│   │   ├── AboutUs.js
+│   │   ├── GetRating.js
+│   │   ├── Home.js
+│   │   └── LensSearch.js
+│   ├── styles/
+│   │   ├── AboutUs.css
+│   │   ├── getRating.css
+│   │   └── home.css
+│   ├── App.js
+│   ├── index.js
+│   └── reportWebVitals.js
+├── package.json
+└── README.md
